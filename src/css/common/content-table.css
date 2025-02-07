@@ -1,0 +1,36 @@
+.main-table-content{
+
+}
+
+.main-table-content .main-table{
+    margin-inline: auto;
+    border-spacing: 0 18px;
+}
+
+.main-table-content .main-table-body{
+    font-size: 18px;
+}
+
+.main-table-content .main-table-row{
+    padding-block: 12px;
+}
+
+.main-table-content .main-table-head{
+    padding-inline: 22px;
+}
+
+.main-table-content .main-table-head .main-table-head-label{
+}
+
+.main-table-content .main-table-data{
+    padding-inline: 22px;
+}
+
+.main-table-content .main-table-data .main-table-data-input{
+    font-size: 18px;
+    padding-inline: 12px;
+    padding-block: 6px;
+    border: 0px;
+    border-radius: 18px;
+    width: 440px;
+}

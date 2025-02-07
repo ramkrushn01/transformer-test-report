@@ -1,0 +1,58 @@
+.main-next-prev-btn {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px; 
+    align-items: center;
+    width: 100%;
+    padding: 22px 0;
+}
+
+.main-next-prev-btn .prev-btn,
+.main-next-prev-btn .next-btn {
+    background: linear-gradient(to right, #6bb9f0, #3498db); /* Light Blue Gradient */
+    color: white;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 25px; 
+    cursor: pointer;
+    transition: 0.5s;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    width: 160px; 
+    text-align: center;
+    text-decoration: none;
+}
+
+.main-next-prev-btn .prev-btn:hover,
+.main-next-prev-btn .next-btn:hover {
+    background: linear-gradient(to right, #3498db, #2980b9);
+}
+
+.main-next-prev-btn .prev-btn:active,
+.main-next-prev-btn .next-btn:active {
+    transform: scale(0.95);
+}
+
+.main-next-prev-btn .prev-btn {
+    background: linear-gradient(to right, #85c1e9, #5dade2);
+}
+
+.main-next-prev-btn .prev-btn:hover {
+    background: linear-gradient(to right, #5dade2, #2e86c1);
+}
+
+.main-next-prev-btn .btn-disable {
+    background: linear-gradient(to right, #b0b0b0, #8c8c8c); /* Darker Grey Gradient */
+    color: #666; /* Darker text for better contrast */
+    cursor: not-allowed;
+    box-shadow: none;
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.main-next-prev-btn .btn-disable:hover,
+.main-next-prev-btn .btn-disable:active {
+    background: linear-gradient(to right, #b0b0b0, #8c8c8c);
+    transform: none;
+}
