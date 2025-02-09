@@ -18,9 +18,12 @@ export default function Home() {
     };
 
     const NextPreviousButtonState = [true,false];
-    const NextPrevLink = ["","/transformer-information/"]
+    const NextPrevLink = ["","/transformer-basic-info/"]
     return (
         <div className="main-content">
+            <div className="main-content-head">
+                Customer Details
+            </div>
             <ContentTable TableContent={HomePageContent}/>
             <NextPreviousButton State={NextPreviousButtonState} NextPrevLink={NextPrevLink} />
         </div>

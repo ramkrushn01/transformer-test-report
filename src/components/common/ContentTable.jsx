@@ -14,7 +14,7 @@ export default function ContentTable(props) {
                                 <label className="main-table-head-label" htmlFor={value}>{key}</label>
                             </th>
                             <td> : </td>
-                            <td className="main-table-data"><input className="main-table-data-input" type={value[1]} placeholder={value[0]} defaultValue={value[2]} /></td>
+                            <td className="main-table-data"><input className="main-table-data-input" type={value[1]} placeholder={value[0]} defaultValue={value[2]} min={value[4]} max={value[5]} /></td>
                             <td>{value[3]}</td>
                         </tr>
                     ))}

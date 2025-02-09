@@ -6,22 +6,25 @@ import NextPreviousButton from "./common/NextPreviousButton";
 export default function Home() {
     // const HomePage = { CellName:[TableValuePlaceholder, ValueType, DefaultValue, ValueUnit] }
     const HomePageContent = {
-        "RATED CAPACITY" : ["Rated Capacity", "number", "", "KVA"],
-        "RATED VOLTAGE HV" : ["Rated Voltage On HV Winding", "number","","VOLTS"],
-        "RATED VOLTAGE LV1" : ["Rated Voltage In LV1 Winding", "number", "" , "VOLTS"],
-        "RATED VOLTAGE LV2" : ["Rated Voltage In LV2 Winding", "number", "" , "VOLTS"],
-        "RATED CURRENT HV" : ["Rated Current In HV Winding", "number", "" ,"AMPS"],
-        "RATED CURRENT LV1" : ["Rated Current In LV1 Winding", "number", "" ,"AMPS"],
-        "RATED CURRENT LV2" : ["Rated Current In LV2 Winding", "number", "" ,"AMPS"],
-        "RATED FREQUENCY": ["Rated Frequency", "number", 50 ,"HZ"],
+        "RATED CAPACITY" : ["Rated Capacity", "number", "", "MVA"],
+        "RATED HV VOLTAGE" : ["Rated Voltage On HV Winding", "number","","KV"],
+        "RATED LV1 VOLTAGE" : ["Rated Voltage In LV1 Winding", "number", "" , "KV"],
+        "RATED LV2 VOLTAGE" : ["Rated Voltage In LV2 Winding", "number", "" , "KV"],
+        "RATED HV CURRENT" : ["Rated Current In HV Winding", "number", "" ,"AMPS"],
+        "RATED LV1 CURRENT" : ["Rated Current In LV1 Winding", "number", "" ,"AMPS"],
+        "RATED LV2 CURRENT" : ["Rated Current In LV2 Winding", "number", "" ,"AMPS"],
         "VECTOR GROUP" : ["Vector Group", "Text", "",""],
+        "RATED FREQUENCY": ["Rated Frequency", "number", 50 ,"HZ"],
         "VOLTAGE VARIATION" : ["Voltage Variation", "text"],
     };
 
     const NextPreviousButtonState = [false,false];
-    const NextPrevLink = ["/","/transformer-information/"]
+    const NextPrevLink = ["/transformer-basic-info/","/transformer-information/"]
     return (
         <div className="main-content">
+            <div className="main-content-head">
+                Transformer Technical Information
+            </div>
             <ContentTable TableContent={HomePageContent}/>
             <NextPreviousButton State={NextPreviousButtonState} NextPrevLink={NextPrevLink} />
         </div>

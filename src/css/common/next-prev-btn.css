@@ -8,7 +8,8 @@
 }
 
 .main-next-prev-btn .prev-btn,
-.main-next-prev-btn .next-btn {
+.main-next-prev-btn .next-btn,
+.main-next-prev-btn .save-btn {
     background: linear-gradient(to right, #6bb9f0, #3498db); /* Light Blue Gradient */
     color: white;
     padding: 12px 24px;
@@ -22,6 +23,10 @@
     width: 160px; 
     text-align: center;
     text-decoration: none;
+}
+
+.main-next-prev-btn .save-btn{
+    background: linear-gradient(to right, #6bf072, #42db34);   
 }
 
 .main-next-prev-btn .prev-btn:hover,

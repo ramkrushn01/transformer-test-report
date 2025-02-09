@@ -1,0 +1,7 @@
+.main-sidebar {
+    display: flex;
+    width: 250px;
+    height: 100vh;
+    background: linear-gradient(to right, #b0b0b0, #8c8c8c);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
