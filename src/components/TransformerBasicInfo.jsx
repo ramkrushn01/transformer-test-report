@@ -4,22 +4,31 @@ import NextPreviousButton from './common/NextPreviousButton';
 
 export default function TransformerBasicInfo() {
  // const HomePage = { CellName:[TableValuePlaceholder, ValueType, DefaultValue, ValueUnit, ValueIntegralMIN, ValueIntegralMIN] }
+    const VectorGroupOption = {"Option" : ["Dyn11", "Dyn1", "YNd11", "YNd1", "DdO", "YNyno"], "default": "Dyn11"}
+    const PhaseOption = {"Option" : ["Single Phase", "Three Phase"], "default":"Three Phase"}
+    // const NoOfLVWindingOption = {"Option": []}
+    const TappingOption = {"Option": ["Yes","No"], "default":"Yes"}
+    const TypeOfTappingOption = {"Option": ["OCTC","OLTC"], "default":"OCTC"}
+    const TappingOnOption = {"Option": ["HV","LV"], "default":"HV"}
+    const RatedFrequencyOption = {"Option": [50, 60], "default":50}
+    const ConductorMaterialOption = {"Option": ["Copper", "Aluminum"], "default":"Copper"}
+
     const HomePageContent = {
         "CAPACITY" : ["Capacity", "number", "", "KVA", "1","315000"],
         "HV VOLTAGE" : ["HV Winding Voltage", "number","","VOLTS", "1"],
         "LV VOLTAGE" : ["LV Winding Voltage", "number", "" , "VOLTS", "1"],
-        "VECTOR GROUP" : ["OPTION", "Text", "",""],
-        "PHASE" : ["OPTION", "Text", "" ],
-        "No OF LV WINDING" : ["OPTION", "number", "","","1"],
-        "TAPPING" : ["OPTION", "number", "" ], // yes/no
-        "TYPE OF TAPPING" : ["OPTION", "number", ""], // OCTC OLTC
-        "TAPPING ON": ["Option", "number", "" ,""], // HV LV
+        "VECTOR GROUP" : [VectorGroupOption, "option", "",""],
+        "PHASE" : [PhaseOption, "option", "" ],
+        "No OF LV WINDING" : ["No of LV Windings", "number", "","","1"],
+        "TAPPING" : [TappingOption, "option", "" ], // yes/no
+        "TYPE OF TAPPING" : [TypeOfTappingOption, "option", ""], // OCTC OLTC
+        "TAPPING ON": [TappingOnOption, "option", "" ,""], // HV LV
         "TAPPING RANGE" : ["","hidden"], 
         "MIN" : ["Negative Voltage Variation", "number", "", "%", "", "-1"],
         "MAX" : ["Positive Voltage Variation", "number", "" ,"%", "1", ""],
         "at %" : ["at %","number","","","1",""],
-        "RATED FREQUENCY": ["OPTION", "number", 50 ,"HZ"], // 50, 60
-        "CONDUCTOR MATERIAL" : ["Option","text"] // Copper Aluminum
+        "RATED FREQUENCY": [RatedFrequencyOption, "option", 50 ,"HZ"], // 50, 60
+        "CONDUCTOR MATERIAL" : [ConductorMaterialOption,"option"] // Copper Aluminum
     };
 
     const NextPreviousButtonState = [false,false];
