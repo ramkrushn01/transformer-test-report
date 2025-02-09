@@ -18,6 +18,7 @@
 .main-table-content .main-table-head{
     padding-inline: 22px;
     text-align: left;
+    font-weight: 500;
 }
 
 .main-table-content .main-table-head .main-table-head-label{

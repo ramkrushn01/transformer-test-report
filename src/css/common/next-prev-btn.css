@@ -12,15 +12,15 @@
 .main-next-prev-btn .save-btn {
     background: linear-gradient(to right, #6bb9f0, #3498db); /* Light Blue Gradient */
     color: white;
-    padding: 12px 24px;
+    padding: 12px 0px;
     font-size: 16px;
-    font-weight: bold;
+    font-weight: 500;
     border: none;
     border-radius: 25px; 
     cursor: pointer;
     transition: 0.5s;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-    width: 160px; 
+    width: 120px; 
     text-align: center;
     text-decoration: none;
 }
