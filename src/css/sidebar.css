@@ -4,7 +4,11 @@
     background-color: #3da2ef;
     box-shadow: 2px 2px 5px #0003;
     max-width: 340px;
+    overflow-y: scroll;
+    scrollbar-width:thin;
+    scrollbar-color: #3498db #f1f1f1;
 }
+
 
 .main-sidebar .side-list{
     list-style: none;

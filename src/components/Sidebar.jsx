@@ -17,7 +17,7 @@ export default function Sidebar() {
         { text: "Measurement Of Load Loss and Impedance", link: "/measurement-of-load-loss-and-impedance/" },
         { text: "Measurement Of Load Loss and Test", link: "/measurement-of-load-loss-and-test/" },
         { text: "Oil BDV", link: "/oil-bdv/" },
-        { text: "Induced Over Voltage Test", link: "/induced-over-voltage-test/" },
+        { text: "Induced Over Voltage Test", link: "/induced-over-voltage-test/" },        
     ];
 
     const PageLocation = useLocation();
