@@ -9,6 +9,7 @@
 
 /* Login Box */
 .login-main .login-box {
+    position: relative;
     background: white;
     padding: 30px;
     width: 350px;
@@ -64,6 +65,12 @@
     font-weight: bold;
     cursor: pointer;
     transition: 0.3s ease-in-out;
+    margin-top: 20px;
+}
+
+.login-main .login-box .error{
+    text-align: left;
+    color: red;   
 }
 
 .login-main .login-btn:hover {

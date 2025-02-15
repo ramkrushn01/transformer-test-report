@@ -5,19 +5,21 @@ import { data, useNavigate } from "react-router-dom";
 
 
 export default function Login() {
-    const navigate = useNavigate();
-
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
+    const [showError, setShowError] = useState("");
+    const [loginBtnText, setLoginBtnText] = useState("Login")
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if(!username && !password){
+        if(!username || !password){
+            setShowError("Please enter your username and password.")
             return;
         }
 
         try {
+            setLoginBtnText("Logging...");
             const LoginPostResponse = await API.post("login/",{
                 'username': username,
                 'password': password
@@ -26,10 +28,12 @@ export default function Login() {
             if(LoginPostResponse.status === 200){
                 localStorage.setItem('login-token', LoginPostResponse.data.access);
                 localStorage.setItem('refresh-token', LoginPostResponse.data.refresh);
-                navigate("/customer-details/");
+                document.location.href = "/customer-details/";
             }
+            setShowError();
         } catch (error) {
-            console.log(error)
+            setShowError("Invalid username or password.");
+            setLoginBtnText("Login");
         }
 
     }
@@ -45,7 +49,7 @@ export default function Login() {
                         <input 
                             type="text"
                             value={username}
-                            onChange={(e)=>setUsername(e.target.value)}
+                            onChange={(e)=>{setUsername(e.target.value); setShowError();}}
                             placeholder="Enter your username" />
                     </div>
                     <div className="input-group">
@@ -53,12 +57,13 @@ export default function Login() {
                         <input
                             type="password"
                             value={password}
-                            onChange={(e)=>setPassword(e.target.value)}
+                            onChange={(e)=>{setPassword(e.target.value); ; setShowError();}}
                             placeholder="Enter your password"
                         />
                     </div>
+                    <div className="error" style={{visibility: `${showError? "visible" : "hidden"}`}}>{showError}</div>
                     <button type="submit" className="login-btn">
-                        Login
+                        {loginBtnText}
                     </button>
                 </form>
                 <p className="login-footer">
