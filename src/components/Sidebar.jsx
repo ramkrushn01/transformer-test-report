@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 
 export default function Sidebar() {
     const SideBarContentList = [
-        { text: "Customer Details", link: "/" },
+        { text: "Customer Details", link: "/customer-details/" },
         { text: "Transformer Basic Information", link: "/transformer-basic-info/" },
         { text: "Transformer Technical Information", link: "/transformer-information/" },
         { text: "Measurement of Insulation Resistance", link: "/measurement-of-insulation-resistance/" },

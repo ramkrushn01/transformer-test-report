@@ -26,6 +26,10 @@ function App() {
                             path="/transformer-basic-info/"
                             element={<TransformerBasicInfo />}
                         />
+                        <Route
+                            path="/customer-details/"
+                            element={<Home />}
+                        />
                     </Routes>
                 </div>
             </div>

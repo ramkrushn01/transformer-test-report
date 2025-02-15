@@ -32,7 +32,7 @@ export default function TransformerBasicInfo() {
     };
 
     const NextPreviousButtonState = [false,false];
-    const NextPrevLink = ["/","/transformer-information/"]
+    const NextPrevLink = ["/customer-details/","/transformer-information/"]
     return (
         <div className="main-content">
             <div className="main-content-head">
