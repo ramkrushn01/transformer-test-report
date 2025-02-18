@@ -1,14 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../css/login.css";
 import API from "../api/custom_axios";
-import { data, useNavigate } from "react-router-dom";
-
+import { useDispatch, useSelector } from "react-redux";
+import { login,  } from "../redux/features/isUserLoggedInSlice";
 
 export default function Login() {
+    useEffect(() => {
+        if(isAuthenticated){
+            document.location.href = "/customer-details/";
+        }
+    }, []);
+
+    const dispatch = useDispatch();
+    const {isAuthenticated, loginToken} = useSelector((state)=> state.isUserLoggedIn);
+
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
     const [showError, setShowError] = useState("");
-    const [loginBtnText, setLoginBtnText] = useState("Login")
+    const [loginBtnText, setLoginBtnText] = useState("Login");
 
 
     const handleSubmit = async (e) => {
@@ -26,8 +35,11 @@ export default function Login() {
             });
 
             if(LoginPostResponse.status === 200){
-                localStorage.setItem('login-token', LoginPostResponse.data.access);
-                localStorage.setItem('refresh-token', LoginPostResponse.data.refresh);
+                const LoginToken = LoginPostResponse.data.access;
+                const RefreshToken = LoginPostResponse.data.refresh;
+                localStorage.setItem('login-token', LoginToken);
+                localStorage.setItem('refresh-token', RefreshToken);
+                dispatch(login(LoginToken));
                 document.location.href = "/customer-details/";
             }
             setShowError();
@@ -38,9 +50,10 @@ export default function Login() {
 
     }
 
-
+    
     return (
-        <div className="login-main">
+        isAuthenticated ? "" :
+            <div className="login-main">
             <div className="login-box">
                 <h2 className="login-title">Login</h2>
                 <form onSubmit={handleSubmit}>
