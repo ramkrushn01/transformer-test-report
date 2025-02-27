@@ -1,0 +1,24 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches:
+      - master  # Trigger deployment on master branch push
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install sshpass
+        run: sudo apt-get update && sudo apt-get install -y sshpass
+
+      - name: Deploy to VPS using Password
+        run: |
+          sshpass -p "${{secrets.VPS_PASS}}" ssh -o StrictHostKeyChecking=no sanket@147.79.70.251 << 'EOF'
+            cd /home/sanket/dev.ramkrushn/TransformerTesting
+            source front-end-deploy.sh
+          EOF
