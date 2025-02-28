@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ContentTable from "./common/ContentTable";
 import "../css/home.css";
 import NextPreviousButton from "./common/NextPreviousButton";
+import { useDispatch } from "react-redux";
+import { setReportId } from "../redux/features/reportIdSlice";
+import { useParams } from "react-router-dom";
 
 export default function Home() {
+    const dispatch = useDispatch();
+    const params = useParams();
     // const HomePage = { CellName:[TableValuePlaceholder, ValueType, DefaultValue, ValueUnit] }
     const HomePageContent = {
         "RATED CAPACITY" : ["Rated Capacity", "number", "", "MVA"],
@@ -20,6 +25,11 @@ export default function Home() {
 
     const NextPreviousButtonState = [false,false];
     const NextPrevLink = ["/transformer-basic-info/","/transformer-information/"]
+
+    useEffect(() => {
+        dispatch(setReportId(params.reportId));
+    }, []);
+    
     return (
         <div className="main-content">
             <div className="main-content-head">

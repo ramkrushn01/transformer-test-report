@@ -16,8 +16,6 @@ export default function Navbar() {
             navigate("/login/");
         }
     }
-
-    console.log(isAuthenticated, loginToken);
     
     return (
         <div className="main-navbar">

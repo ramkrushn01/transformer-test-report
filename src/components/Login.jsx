@@ -7,7 +7,7 @@ import { login,  } from "../redux/features/isUserLoggedInSlice";
 export default function Login() {
     useEffect(() => {
         if(isAuthenticated){
-            document.location.href = "/customer-details/";
+            document.location.href = "/reports/";
         }
     }, []);
 
@@ -40,7 +40,7 @@ export default function Login() {
                 localStorage.setItem('login-token', LoginToken);
                 localStorage.setItem('refresh-token', RefreshToken);
                 dispatch(login(LoginToken));
-                document.location.href = "/customer-details/";
+                document.location.href = "/reports/";
             }
             setShowError();
         } catch (error) {
