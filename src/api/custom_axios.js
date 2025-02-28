@@ -1,7 +1,6 @@
 import axios from "axios";
 
-const baseURL = "http://127.0.0.1:8000/api/";
-// const baseURL = "https://api.testing.schemesinindia.in/"
+const baseURL = process.env.REACT_APP_API_URL;
 
 const API = axios.create({
     baseURL: baseURL,
