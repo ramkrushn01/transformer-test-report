@@ -6,8 +6,8 @@ import { useParams } from 'react-router-dom';
 import { setReportId } from '../redux/features/reportIdSlice';
 
 export default function TransformerBasicInfo() {
-    const dispatch = useDispatch();
     const params = useParams();
+    const dispatch = useDispatch();
  // const HomePage = { CellName:[TableValuePlaceholder, ValueType, DefaultValue, ValueUnit, ValueIntegralMIN, ValueIntegralMIN] }
     const VectorGroupOption = {"Option" : ["Dyn11", "Dyn1", "YNd11", "YNd1", "DdO", "YNyno"], "default": "Dyn11"}
     const PhaseOption = {"Option" : ["Single Phase", "Three Phase"], "default":"Three Phase"}
@@ -37,7 +37,7 @@ export default function TransformerBasicInfo() {
     };
 
     const NextPreviousButtonState = [false,false];
-    const NextPrevLink = ["/customer-details/","/transformer-information/"]
+    const NextPrevLink = [`/customer-details/${params.reportId}`,`/transformer-information/${params.reportId}`]
 
     useEffect(() => {
         dispatch(setReportId(params.reportId));

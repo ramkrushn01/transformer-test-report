@@ -38,7 +38,7 @@ export default function Home() {
     
 
     const NextPreviousButtonState = [true,false];
-    const NextPrevLink = ["","/transformer-basic-info/"]
+    const NextPrevLink = ["",`/transformer-basic-info/${params.reportId}`]
     return (
         <div className="main-content">
             <div className="main-content-head">

@@ -24,7 +24,7 @@ export default function Home() {
     };
 
     const NextPreviousButtonState = [false,false];
-    const NextPrevLink = ["/transformer-basic-info/","/transformer-information/"]
+    const NextPrevLink = [`/transformer-basic-info/${params.reportId}`,`/transformer-information/${params.reportId}`]
 
     useEffect(() => {
         dispatch(setReportId(params.reportId));
