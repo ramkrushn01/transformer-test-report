@@ -23,8 +23,6 @@ export default function Sidebar() {
     ];
 
     const PageLocation = useLocation();
-    // console.log(PageLocation.pathname.split("/")[1])
-    console.log(SideBarContentList[0].link.split("/")[1])
 
     return (
         <div className="main-sidebar">

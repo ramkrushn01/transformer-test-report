@@ -11,7 +11,10 @@ export default function Reports() {
     const [data, setData] = useState();
     const dispatch =  useDispatch();
 
-    const gotoReport = (id)=>{
+    const gotoReport = (e,id)=>{
+        if(e.target.className === "btn-delete" || e.target.tagName === "svg" || e.target.tagName === "path"){
+            return
+        }
         navigate(`/customer-details/${id}`);
         dispatch(setReportId(id));
     }
@@ -24,6 +27,14 @@ export default function Reports() {
         });
     }, [])
 
+    const DeleteReport = (id)=>{
+        API.delete(`customer-details/${id}`).then((response) => {
+            setData(data.filter(item=> item.id !== id ));
+        }).catch((err) => {
+
+        });
+    }
+
   return (
       <div className="main-reports">
         <h1 className="reports-head">Reports</h1>
@@ -32,7 +43,7 @@ export default function Reports() {
               <table className="styled-table">
                   <thead>
                       <tr>
-                          {/* <th>ID</th> */}
+                          <th>Sr.No.</th>
                           <th>Customer Name</th>
                           <th>Work Order</th>
                           <th>Certificate No</th>
@@ -46,9 +57,9 @@ export default function Reports() {
                       </tr>
                   </thead>
                   <tbody>
-                      {data?.map((item) => (
-                          <tr key={item.id} onClick={()=>{gotoReport(item.id)}}>
-                              {/* <td>{item.id}</td> */}
+                      {data?.map((item,index) => (
+                          <tr key={item.id} onClick={(e)=>{gotoReport(e,item.id)}}>
+                              <td>{index+1}</td>
                               <td>{item.customer_name}</td>
                               <td>{item.work_order_number}</td>
                               <td>{item.certificate_number}</td>
@@ -58,7 +69,7 @@ export default function Reports() {
                               <td>{item.reference_standard}</td>
                               <td>{item.testing_date}</td>
                               <td>{item.remark}</td>
-                              <td><MdDeleteForever size={"30px"} /></td>
+                              <td className="btn-delete" onClick={()=>{DeleteReport(item.id)}}><MdDeleteForever className="btn-delete" size={"30px"} /></td>
                           </tr>
                       ))}
                   </tbody>
