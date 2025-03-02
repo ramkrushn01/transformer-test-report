@@ -6,7 +6,7 @@ import { logout } from "../redux/features/isUserLoggedInSlice";
 
 export default function Navbar() {
     const dispatch = useDispatch();
-    const {isAuthenticated, loginToken} = useSelector((state)=> state.isUserLoggedIn);
+    const {isAuthenticated} = useSelector((state)=> state.isUserLoggedIn);
     const navigate = useNavigate();
 
     const onLogin = ()=>{

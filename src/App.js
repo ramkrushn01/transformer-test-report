@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
 import TransformerInfo from "./components/TransformerInfo";
 import Navbar from "./components/Navbar";
@@ -10,7 +10,6 @@ import Reports from "./components/Reports";
 import MainHome from "./components/MainHome";
 
 function App() {
-    const SidebarNotDisplayList = ['/login/', '/reports/'];
     return (
         <BrowserRouter>
             <Navbar />

@@ -1,6 +1,6 @@
 import React from "react";
 import "../css/sidebar.css";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 

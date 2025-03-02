@@ -10,11 +10,11 @@ export default function Login() {
         if(isAuthenticated){
             document.location.href = "/reports/";
         }
-    }, []);
+    }, [isAuthenticated]);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const {isAuthenticated, loginToken} = useSelector((state)=> state.isUserLoggedIn);
+    const {isAuthenticated} = useSelector((state)=> state.isUserLoggedIn);
 
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
