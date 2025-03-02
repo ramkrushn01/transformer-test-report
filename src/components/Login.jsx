@@ -16,8 +16,8 @@ export default function Login() {
     const dispatch = useDispatch();
     const {isAuthenticated} = useSelector((state)=> state.isUserLoggedIn);
 
-    const [username, setUsername] = useState();
-    const [password, setPassword] = useState();
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
     const [showError, setShowError] = useState("");
     const [loginBtnText, setLoginBtnText] = useState("Login");
 
