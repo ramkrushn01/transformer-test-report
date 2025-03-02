@@ -64,6 +64,7 @@ export default function Login() {
                         <input 
                             type="text"
                             value={username}
+                            autoFocus
                             onChange={(e)=>{setUsername(e.target.value); setShowError();}}
                             placeholder="Enter your username" />
                     </div>
