@@ -52,3 +52,7 @@
     background-color: #f2f9ff;
   }
   
+  .main-reports .no-record{
+    font-size: 18px;
+    text-align: center !important;
+  }
