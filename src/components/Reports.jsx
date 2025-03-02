@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setReportId } from '../redux/features/reportIdSlice';
 import Loading from './common/Loading';
+import { LuNotebookPen } from "react-icons/lu";
 
 export default function Reports() {
     const navigate = useNavigate();
@@ -20,6 +21,26 @@ export default function Reports() {
         navigate(`/customer-details/${id}`);
         dispatch(setReportId(id));
     }
+
+	
+	const CreateReport = ()=>{
+		API.post('customer-details/',{
+			"customer_name": "",
+			"work_order_number": "",
+			"certificate_number": "",
+			"transformer_make": "",
+			"serial_number": "",
+			"rating": "",
+			"reference_standard": "",
+			"remark": ""
+		}).then((response) => {
+			const newReportId = response.data.id;
+			navigate(`/customer-details/${newReportId}`);
+			dispatch(setReportId(newReportId));
+		}).catch((err) => {
+			console.log(err);
+		});	
+	}
 
     const DeleteReport = (id)=>{
         API.delete(`customer-details/${id}`).then((response) => {
@@ -40,8 +61,15 @@ export default function Reports() {
 
   return (
       <div className="main-reports">
-          <h1 className="reports-head">Reports</h1>
-
+        <div className="reports-head">
+			<div className="left-head">
+				{/* left */}
+			</div>
+            <h1 className="head-txt">Reports</h1>
+			<div className="right-head">
+				<button className='btn-create' onClick={CreateReport}><LuNotebookPen size="20px" /> &nbsp; New Report</button>
+			</div>
+        </div>
           <div className="table-container">
               <table className="styled-table">
                   <thead>
