@@ -12,6 +12,7 @@ export default function Navbar() {
     const onLogin = ()=>{
         if(isAuthenticated){
             dispatch(logout());
+            navigate("/");
         }else{
             navigate("/login/");
         }

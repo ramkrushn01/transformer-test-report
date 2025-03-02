@@ -3,6 +3,7 @@ import "../css/login.css";
 import API from "../api/custom_axios";
 import { useDispatch, useSelector } from "react-redux";
 import { login,  } from "../redux/features/isUserLoggedInSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
     useEffect(() => {
@@ -11,6 +12,7 @@ export default function Login() {
         }
     }, []);
 
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const {isAuthenticated, loginToken} = useSelector((state)=> state.isUserLoggedIn);
 
@@ -40,7 +42,7 @@ export default function Login() {
                 localStorage.setItem('login-token', LoginToken);
                 localStorage.setItem('refresh-token', RefreshToken);
                 dispatch(login(LoginToken));
-                document.location.href = "/reports/";
+                navigate('/reports/');
             }
             setShowError();
         } catch (error) {
