@@ -12,6 +12,9 @@
     margin-left: 20px;
 }
 
+.main-navbar .left-side .logo{
+  width: 54px;
+}
 .main-navbar .right-side{
     margin-right: 20px;
 }

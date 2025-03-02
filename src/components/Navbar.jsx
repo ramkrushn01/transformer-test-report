@@ -1,6 +1,6 @@
 import React from "react";
 import "../css/navbar.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/features/isUserLoggedInSlice";
 
@@ -20,7 +20,11 @@ export default function Navbar() {
     
     return (
         <div className="main-navbar">
-            <div className="left-side"></div>
+            <div className="left-side">
+                <Link to={`${isAuthenticated? "/reports" : "/"}`}>
+                    <img src="/logo.png" alt="logo" className="logo" />
+                </Link>
+            </div>
             <div className="right-side">
                 <div className="login">
                     <button onClick={onLogin} className="login-btn" >{isAuthenticated ? "Logout" : "login"}</button>
