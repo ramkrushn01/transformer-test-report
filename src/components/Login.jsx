@@ -10,7 +10,7 @@ export default function Login() {
         if(isAuthenticated){
             document.location.href = "/reports/";
         }
-    }, [isAuthenticated]);
+    }, []);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
