@@ -5,8 +5,8 @@ import PropTypes from "prop-types";
 export default function Loading({size}) {
   return (
       <div className="main-loading">
-          <div class="loader-container">
-              <div class="loader" style={{width:size, height:size}}></div>
+          <div className="loader-container">
+              <div className="loader" style={{width:size, height:size}}></div>
           </div>
       </div>
   );
