@@ -7,6 +7,7 @@ import Sidebar from "./components/Sidebar";
 import TransformerBasicInfo from "./components/TransformerBasicInfo";
 import Login from "./components/Login";
 import Reports from "./components/Reports";
+import MainHome from "./components/MainHome";
 
 function App() {
     const SidebarNotDisplayList = ['/login/', '/reports/'];
@@ -24,7 +25,7 @@ function App() {
                 <div className="main-div">
                     <Routes element={<Sidebar />}>
                         {/* <Route element={<Sidebar />}> */}
-                        <Route path="/" element={<Home />} />
+                        <Route path="/" element={<MainHome />} />
                         <Route
                             path="/transformer-information/:reportId"
                             element={<TransformerInfo />}
