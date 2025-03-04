@@ -19,25 +19,45 @@ export default function TransformerBasicInfo() {
     const ConductorMaterialOption = {"Option": ["Copper", "Aluminum"], "default":"Copper"}
 
     const HomePageContent = {
-        "CAPACITY" : ["Capacity", "number", "", "KVA", "1","315000"],
-        "HV VOLTAGE" : ["HV Winding Voltage", "number","","VOLTS", "1"],
-        "LV VOLTAGE" : ["LV Winding Voltage", "number", "" , "VOLTS", "1"],
-        "VECTOR GROUP" : [VectorGroupOption, "option", "",""],
-        "PHASE" : [PhaseOption, "option", "" ],
-        "No OF LV WINDING" : ["No of LV Windings", "number", "","","1"],
-        "TAPPING" : [TappingOption, "option", "" ], // yes/no
-        "TYPE OF TAPPING" : [TypeOfTappingOption, "option", ""], // OCTC OLTC
-        "TAPPING ON": [TappingOnOption, "option", "" ,""], // HV LV
-        "TAPPING RANGE" : ["","hidden"], 
-        "MIN" : ["Negative Voltage Variation", "number", "", "%", "", "-1"],
-        "MAX" : ["Positive Voltage Variation", "number", "" ,"%", "1", ""],
-        "at %" : ["at %","number","","","1",""],
-        "RATED FREQUENCY": [RatedFrequencyOption, "option", 50 ,"HZ"], // 50, 60
-        "CONDUCTOR MATERIAL" : [ConductorMaterialOption,"option"] // Copper Aluminum
+        // "CAPACITY" : ["Capacity", "number", "", "KVA", "1","315000"], 
+        // "HV VOLTAGE" : ["HV Winding Voltage", "number","","VOLTS", "1"],
+        // "LV VOLTAGE" : ["LV Winding Voltage", "number", "" , "VOLTS", "1"],
+        // "VECTOR GROUP" : [VectorGroupOption, "option", "",""],
+        // "PHASE" : [PhaseOption, "option", "" ],
+        // "No OF LV WINDING" : ["No of LV Windings", "number", "","","1"],
+        // "TAPPING" : [TappingOption, "option", "" ], // yes/no
+        // "TYPE OF TAPPING" : [TypeOfTappingOption, "option", ""], // OCTC OLTC
+        // "TAPPING ON": [TappingOnOption, "option", "" ,""], // HV LV
+        // "TAPPING RANGE" : ["","hidden"], 
+        // "MIN" : ["Negative Voltage Variation", "number", "", "%", "", "-1"],
+        // "MAX" : ["Positive Voltage Variation", "number", "" ,"%", "1", ""],
+        // "at %" : ["at %","number","","","1",""],
+        // "RATED FREQUENCY": [RatedFrequencyOption, "option", 50 ,"HZ"], // 50, 60
+        // "CONDUCTOR MATERIAL" : [ConductorMaterialOption,"option"] // Copper Aluminum
+
+        "CAPACITY" : {TableValuePlaceholder: "Capacity", ValueType: "number", DefaultValue: "", ValueUnit: "KVA", ValueIntegralMIN: "1", ValueIntegralMAX: "315000"},
+        "HV VOLTAGE": { TableValuePlaceholder: "HV Winding Voltage", ValueType: "number", DefaultValue: "", ValueUnit: "VOLTS", ValueIntegralMIN: "1", },
+        "LV VOLTAGE": { TableValuePlaceholder: "LV Winding Voltage", ValueType: "number", DefaultValue: "", ValueUnit: "VOLTS", ValueIntegralMIN: "1" },
+        "VECTOR GROUP": { TableValuePlaceholder: "Vector Group", ValueType: "option", OptionValue: VectorGroupOption },
+        "PHASE": { TableValuePlaceholder: "Phase", ValueType: "option", OptionValue: PhaseOption },
+        "No OF LV WINDING": { TableValuePlaceholder: "No of LV Windings", ValueType: "number", DefaultValue: "", ValueIntegralMIN: "1" },
+        "TAPPING": { TableValuePlaceholder: "Tapping", ValueType: "option", OptionValue: TappingOption }, // yes/no
+        "TYPE OF TAPPING": { TableValuePlaceholder: "Type of Tapping", ValueType: "option", OptionValue: TypeOfTappingOption }, // OCTC OLTC
+        "TAPPING ON": { TableValuePlaceholder: "Tapping On", ValueType: "option", OptionValue: TappingOnOption },
+        "TAPPING RANGE": { TableValuePlaceholder: "", ValueType: "hidden" },
+        "MIN": { TableValuePlaceholder: "Negative Voltage Variation", ValueType: "number", DefaultValue: "", ValueUnit: "%", ValueIntegralMIN: "-1" },
+        "MAX": { TableValuePlaceholder: "Positive Voltage Variation", ValueType: "number", DefaultValue: "", ValueUnit: "%", ValueIntegralMAX: "1" },
+        "at %": { TableValuePlaceholder: "at %", ValueType: "number", DefaultValue: "", ValueIntegralMIN: "1" },
+        "RATED FREQUENCY": { TableValuePlaceholder: "Rated Frequency", ValueType: "option", OptionValue: RatedFrequencyOption, ValueUnit: "HZ" }, // 50, 60
+        "CONDUCTOR MATERIAL": { TableValuePlaceholder: "Conductor Material", ValueType: "option", OptionValue: ConductorMaterialOption } // Copper, Aluminum
     };
 
     const NextPreviousButtonState = [false,false];
     const NextPrevLink = [`/customer-details/${params.reportId}`,`/transformer-information/${params.reportId}`]
+
+    const OnValueChange = (e)=>{
+        console.log(e);
+    }
 
     useEffect(() => {
         dispatch(setReportId(params.reportId));
@@ -48,7 +68,7 @@ export default function TransformerBasicInfo() {
             <div className="main-content-head">
                 Transformer Basic Information
             </div>
-            <ContentTable TableContent={HomePageContent}/>
+            <ContentTable TableContent={HomePageContent} OnValueChange={OnValueChange}/>
             <NextPreviousButton State={NextPreviousButtonState} NextPrevLink={NextPrevLink} />
         </div>
     );

@@ -15,19 +15,19 @@ export default function ContentTable(props) {
                             </th>
                             <td> : </td>
                             <td className="main-table-data">
-                                { value[1] === "option" ?
+                                { value?.ValueType === "option" ?
                                 <select className="main-table-data-input">
                                     {
-                                        value[0]["Option"]?.map((item,index)=>(
+                                        value?.OptionValue?.Option?.map((item,index)=>(
                                             <option key={index} value={item}>{item}</option>
                                         ))
                                     }
                                 </select>
                                 :
-                                    <input className="main-table-data-input" type={value[1]} placeholder={value[0]} defaultValue={value[2]} min={value[4]} max={value[5]} />
+                                    <input onChange={(e)=>(props?.OnValueChange(e))} className="main-table-data-input" type={value?.ValueType} placeholder={value?.TableValuePlaceholder} defaultValue={value?.DefaultValue} min={value?.ValueIntegralMIN} max={value?.ValueIntegralMax} name={value?.BackendName} />
                                 }
                             </td>
-                            <td>{value[3]}</td>
+                            <td>{value?.ValueUnit}</td>
                         </tr>
                     ))}
                 </tbody>

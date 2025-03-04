@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ContentTable from "./common/ContentTable";
 import "../css/home.css";
 import NextPreviousButton from "./common/NextPreviousButton";
@@ -10,26 +10,52 @@ import { setReportId } from "../redux/features/reportIdSlice";
 export default function Home() {
     const params = useParams('reportId');
     const dispatch = useDispatch();
+    const idRef = useRef();
     // console.log(params.reportId);
     const [customerData, setCustomerData] = useState();
     // const HomePage = { CellName:[TableValuePlaceholder, ValueType, DefaultValue, ValueUnit] }
     const HomePageContent = {
-        "NAME OF THE CONSUMER" : ["Consumer Name", "text", customerData?.customer_name,],
-        "WORK ORDER NO" : ["Transformer Number", "text", customerData?.work_order_number],
-        "CERTIFICATE NO" : ["Certificate Number", "text", customerData?.certificate_number],
-        "TRANSFORMER MAKE" : ["Who make transformer", "text", customerData?.transformer_make],
-        "SERIAL NO" : ["Serial Number", "text", customerData?.serial_number],
-        "RATING" : ["Transformer Rating", "text", customerData?.rating],
-        "REFERENCE STANDARD": ["Reference Standard", "text", customerData?.reference_standard],
-        "TESTING DATE" : ["Testing Date", "date", customerData?.testing_date],
-        "REMARK" : ["Remark", "text", customerData?.remark],
+        // "NAME OF THE CONSUMER" : ["Consumer Name", "text", customerData?.customer_name,], 
+        // "WORK ORDER NO" : ["Transformer Number", "text", customerData?.work_order_number],
+        // "CERTIFICATE NO" : ["Certificate Number", "text", customerData?.certificate_number],
+        // "TRANSFORMER MAKE" : ["Who make transformer", "text", customerData?.transformer_make],
+        // "SERIAL NO" : ["Serial Number", "text", customerData?.serial_number],
+        // "RATING" : ["Transformer Rating", "text", customerData?.rating, "KVA"],
+        // "REFERENCE STANDARD": ["Reference Standard", "text", customerData?.reference_standard],
+        // "TESTING DATE" : ["Testing Date", "date", customerData?.testing_date],
+        // "REMARK" : ["Remark", "text", customerData?.remark],
+
+        "NAME OF THE CONSUMER": {TableValuePlaceholder: "Customer Name", ValueType: "text", DefaultValue: customerData?.customer_name, BackendName: "customer_name"},
+        "WORK ORDER NO": { TableValuePlaceholder: "Transformer Number", ValueType: "text", DefaultValue: customerData?.work_order_number, BackendName: "work_order_number" },
+        "CERTIFICATE NO": { TableValuePlaceholder: "Certificate Number", ValueType: "text", DefaultValue: customerData?.certificate_number, BackendName: "certificate_number" },
+        "TRANSFORMER MAKE": { TableValuePlaceholder: "Who make transformer", ValueType: "text", DefaultValue: customerData?.transformer_make, BackendName: "transformer_make" },
+        "SERIAL NO": { TableValuePlaceholder: "Serial Number", ValueType: "text", DefaultValue: customerData?.serial_number, BackendName: "serial_number" },
+        "RATING": { TableValuePlaceholder: "Transformer Rating", ValueType: "text", DefaultValue: customerData?.rating, ValueUnit: "KVA", BackendName: "rating" },
+        "REFERENCE STANDARD": { TableValuePlaceholder: "Reference Standard", ValueType: "text", DefaultValue: customerData?.reference_standard, BackendName: "reference_standard" },
+        "TESTING DATE": { TableValuePlaceholder: "Testing Date", ValueType: "date", DefaultValue: customerData?.testing_date, BackendName: "testing_date" },
+        "REMARK": { TableValuePlaceholder: "Remark", ValueType: "text", DefaultValue: customerData?.remark, BackendName: "remark" },
     };
+
+    const UpdatedValue ={}
+
+    const OnValueChange = (e)=>{
+        UpdatedValue[e.target.name] = e.target.value;
+    }
+
+    const OnSaveClick = (e)=>{
+        console.log(UpdatedValue);
+        API.patch(`/customer-details/${idRef.current}/`,UpdatedValue).then((response) => {
+            // console.log(response.data);
+        }).catch((err) => {
+            
+        });
+    }
 
     useEffect(() => {
     dispatch(setReportId(params.reportId));
-      API.get(`/customer-details/${params.reportId}`).then((response) => {
+      API.get(`/customer-details/${params.reportId}/`).then((response) => {
+        idRef.current = response?.data?.id;
         setCustomerData(response.data);
-        // console.log(response.data)
       }).catch((err) => {
         
       });
@@ -44,8 +70,8 @@ export default function Home() {
             <div className="main-content-head">
                 Customer Details
             </div>
-            <ContentTable TableContent={HomePageContent}/>
-            <NextPreviousButton State={NextPreviousButtonState} NextPrevLink={NextPrevLink} />
+            <ContentTable TableContent={HomePageContent} OnValueChange={OnValueChange} />
+            <NextPreviousButton OnSaveClick={OnSaveClick} State={NextPreviousButtonState} NextPrevLink={NextPrevLink} />
         </div>
     );
 }
