@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { setReportId } from '../redux/features/reportIdSlice';
 import Loading from './common/Loading';
 import { LuNotebookPen } from "react-icons/lu";
+import { toast, ToastContainer } from 'react-toastify';
 
 export default function Reports() {
     const navigate = useNavigate();
@@ -45,6 +46,7 @@ export default function Reports() {
     const DeleteReport = (id)=>{
         API.delete(`customer-details/${id}`).then((response) => {
             setData(data.filter(item=> item.id !== id ));
+            toast.success("Delete! Report delete successfully")
         }).catch((err) => {
 
         });
@@ -61,6 +63,7 @@ export default function Reports() {
 
   return (
       <div className="main-reports">
+        <ToastContainer/>
         <div className="reports-head">
 			<div className="left-head">
 				{/* left */}

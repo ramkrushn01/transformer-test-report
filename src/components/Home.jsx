@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import API from "../api/custom_axios";
 import { useDispatch } from "react-redux";
 import { setReportId } from "../redux/features/reportIdSlice";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function Home() {
     const params = useParams('reportId');
@@ -45,7 +46,7 @@ export default function Home() {
     const OnSaveClick = (e)=>{
         console.log(UpdatedValue);
         API.patch(`/customer-details/${idRef.current}/`,UpdatedValue).then((response) => {
-            // console.log(response.data);
+            toast.success("Success! Information updated successfully.");
         }).catch((err) => {
             
         });
@@ -67,6 +68,7 @@ export default function Home() {
     const NextPrevLink = ["",`/transformer-basic-info/${params.reportId}`]
     return (
         <div className="main-content">
+            <ToastContainer/>
             <div className="main-content-head">
                 Customer Details
             </div>

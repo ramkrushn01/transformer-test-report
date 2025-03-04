@@ -2,6 +2,7 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
+import "react-toastify/dist/ReactToastify.css";
 
 // Pages
 import Home from "./components/Home";
