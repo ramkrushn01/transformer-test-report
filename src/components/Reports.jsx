@@ -12,6 +12,8 @@ import { toast, ToastContainer } from 'react-toastify';
 export default function Reports() {
     const navigate = useNavigate();
     const [data, setData] = useState();
+    const [isReportDeleting, setIsReportDeleting] = useState([false, 0]);
+    const [isReportCreating, setIsReportCreating] = useState(false);
     const [loading, setLoading] = useState(true);
     const dispatch =  useDispatch();
 
@@ -25,6 +27,7 @@ export default function Reports() {
 
 	
 	const CreateReport = ()=>{
+        setIsReportCreating(true);
 		API.post('customer-details/',{
 			"customer_name": "",
 			"work_order_number": "",
@@ -35,20 +38,24 @@ export default function Reports() {
 			"reference_standard": "",
 			"remark": ""
 		}).then((response) => {
+            setIsReportCreating(false);
 			const newReportId = response.data.id;
 			navigate(`/customer-details/${newReportId}`);
 			dispatch(setReportId(newReportId));
 		}).catch((err) => {
+            setIsReportCreating(false);
 			console.log(err);
 		});	
 	}
 
     const DeleteReport = (id)=>{
+        setIsReportDeleting([true, id]);
         API.delete(`customer-details/${id}`).then((response) => {
+            setIsReportDeleting([false, 0]);
             setData(data.filter(item=> item.id !== id ));
-            toast.success("Delete! Report delete successfully")
+            toast.success(`Delete! Report ${id} delete successfully`);
         }).catch((err) => {
-
+            setIsReportDeleting([false, 0]);
         });
     }
 
@@ -70,7 +77,7 @@ export default function Reports() {
 			</div>
             <h1 className="head-txt">Reports</h1>
 			<div className="right-head">
-				<button className='btn-create' onClick={CreateReport}><LuNotebookPen size="20px" /> &nbsp; New Report</button>
+				<button className='btn-create' disabled={isReportCreating ? true : false} onClick={CreateReport}> {isReportCreating ? <Loading size="10px"/> : <LuNotebookPen size="20px" />}  &nbsp; New Report</button>
 			</div>
         </div>
           <div className="table-container">
@@ -112,10 +119,12 @@ export default function Reports() {
                                   onClick={() => {
                                       DeleteReport(item.id);
                                   }}>
-                                  <MdDeleteForever
-                                      className="btn-delete"
-                                      size={"30px"}
-                                  />
+                                    {
+                                        isReportDeleting[0] && item.id === isReportDeleting[1] ? <Loading size="24px" color="black"/> : <MdDeleteForever
+                                        className="btn-delete"
+                                        size={"30px"}
+                                    />
+                                    }
                               </td>
                           </tr>
                       ))}
