@@ -16,10 +16,10 @@ export default function ContentTable(props) {
                             <td> : </td>
                             <td className="main-table-data">
                                 { value?.ValueType === "option" ?
-                                <select className="main-table-data-input">
+                                <select className="main-table-data-input" name={value?.BackendName} onChange={(e)=>(props?.OnValueChange(e))}>
                                     {
                                         value?.OptionValue?.Option?.map((item,index)=>(
-                                            <option key={index} value={item}>{item}</option>
+                                            <option selected={item==value?.DefaultValue} key={index} value={item}>{item}</option>
                                         ))
                                     }
                                 </select>

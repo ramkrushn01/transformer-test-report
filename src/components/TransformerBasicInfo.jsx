@@ -1,13 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ContentTable from './common/ContentTable';
 import NextPreviousButton from './common/NextPreviousButton';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { setReportId } from '../redux/features/reportIdSlice';
+import API from '../api/custom_axios';
+import { toast, ToastContainer } from 'react-toastify';
 
 export default function TransformerBasicInfo() {
     const params = useParams();
     const dispatch = useDispatch();
+    const idRef = useRef();
+    const [transformerBasicInfo, setTransformerBasicInfo] = useState();
  // const HomePage = { CellName:[TableValuePlaceholder, ValueType, DefaultValue, ValueUnit, ValueIntegralMIN, ValueIntegralMIN] }
     const VectorGroupOption = {"Option" : ["Dyn11", "Dyn1", "YNd11", "YNd1", "DdO", "YNyno"], "default": "Dyn11"}
     const PhaseOption = {"Option" : ["Single Phase", "Three Phase"], "default":"Three Phase"}
@@ -35,41 +39,58 @@ export default function TransformerBasicInfo() {
         // "RATED FREQUENCY": [RatedFrequencyOption, "option", 50 ,"HZ"], // 50, 60
         // "CONDUCTOR MATERIAL" : [ConductorMaterialOption,"option"] // Copper Aluminum
 
-        "CAPACITY" : {TableValuePlaceholder: "Capacity", ValueType: "number", DefaultValue: "", ValueUnit: "KVA", ValueIntegralMIN: "1", ValueIntegralMAX: "315000"},
-        "HV VOLTAGE": { TableValuePlaceholder: "HV Winding Voltage", ValueType: "number", DefaultValue: "", ValueUnit: "VOLTS", ValueIntegralMIN: "1", },
-        "LV VOLTAGE": { TableValuePlaceholder: "LV Winding Voltage", ValueType: "number", DefaultValue: "", ValueUnit: "VOLTS", ValueIntegralMIN: "1" },
-        "VECTOR GROUP": { TableValuePlaceholder: "Vector Group", ValueType: "option", OptionValue: VectorGroupOption },
-        "PHASE": { TableValuePlaceholder: "Phase", ValueType: "option", OptionValue: PhaseOption },
-        "No OF LV WINDING": { TableValuePlaceholder: "No of LV Windings", ValueType: "number", DefaultValue: "", ValueIntegralMIN: "1" },
-        "TAPPING": { TableValuePlaceholder: "Tapping", ValueType: "option", OptionValue: TappingOption }, // yes/no
-        "TYPE OF TAPPING": { TableValuePlaceholder: "Type of Tapping", ValueType: "option", OptionValue: TypeOfTappingOption }, // OCTC OLTC
-        "TAPPING ON": { TableValuePlaceholder: "Tapping On", ValueType: "option", OptionValue: TappingOnOption },
-        "TAPPING RANGE": { TableValuePlaceholder: "", ValueType: "hidden" },
-        "MIN": { TableValuePlaceholder: "Negative Voltage Variation", ValueType: "number", DefaultValue: "", ValueUnit: "%", ValueIntegralMIN: "-1" },
-        "MAX": { TableValuePlaceholder: "Positive Voltage Variation", ValueType: "number", DefaultValue: "", ValueUnit: "%", ValueIntegralMAX: "1" },
-        "at %": { TableValuePlaceholder: "at %", ValueType: "number", DefaultValue: "", ValueIntegralMIN: "1" },
-        "RATED FREQUENCY": { TableValuePlaceholder: "Rated Frequency", ValueType: "option", OptionValue: RatedFrequencyOption, ValueUnit: "HZ" }, // 50, 60
-        "CONDUCTOR MATERIAL": { TableValuePlaceholder: "Conductor Material", ValueType: "option", OptionValue: ConductorMaterialOption } // Copper, Aluminum
+        "CAPACITY" : {TableValuePlaceholder: "Capacity", ValueType: "number", DefaultValue: transformerBasicInfo?.capacity, ValueUnit: "KVA", ValueIntegralMIN: "1", ValueIntegralMAX: "315000", BackendName: "capacity"},
+        "HV VOLTAGE": { TableValuePlaceholder: "HV Winding Voltage", ValueType: "number", DefaultValue: transformerBasicInfo?.hv_voltage, ValueUnit: "VOLTS", ValueIntegralMIN: "1", BackendName: "hv_voltage" },
+        "LV VOLTAGE": { TableValuePlaceholder: "LV Winding Voltage", ValueType: "number", DefaultValue: transformerBasicInfo?.lv_voltage, ValueUnit: "VOLTS", ValueIntegralMIN: "1", BackendName: "lv_voltage" },
+        "VECTOR GROUP": { TableValuePlaceholder: "Vector Group", ValueType: "option", DefaultValue: transformerBasicInfo?.vector_group , OptionValue: VectorGroupOption, BackendName: "vector_group" },
+        "PHASE": { TableValuePlaceholder: "Phase", ValueType: "option", DefaultValue: transformerBasicInfo?.phase , OptionValue: PhaseOption, BackendName: "phase" },
+        "No OF LV WINDING": { TableValuePlaceholder: "No of LV Windings", ValueType: "number", DefaultValue: transformerBasicInfo?.no_of_lv_winding, ValueIntegralMIN: "1", BackendName: "no_of_lv_winding" },
+        "TAPPING": { TableValuePlaceholder: "Tapping", ValueType: "option", DefaultValue: transformerBasicInfo?.tapping , OptionValue: TappingOption, BackendValue: "tapping" }, // yes/no
+        "TYPE OF TAPPING": { TableValuePlaceholder: "Type of Tapping", ValueType: "option", DefaultValue: transformerBasicInfo?.type_of_tapping , OptionValue: TypeOfTappingOption, BackendName: "type_of_tapping" }, // OCTC OLTC
+        "TAPPING ON": { TableValuePlaceholder: "Tapping On", ValueType: "option", DefaultValue: transformerBasicInfo?.tapping_on , OptionValue: TappingOnOption, BackendName: "tapping_on" }, // HV LV
+        "TAPPING RANGE": { TableValuePlaceholder: "", ValueType: "hidden", DefaultValue: transformerBasicInfo?.tapping_range, BackendName: "tapping_range" },
+        "MIN": { TableValuePlaceholder: "Negative Voltage Variation", ValueType: "number", DefaultValue: transformerBasicInfo?.tapping_range_min, ValueUnit: "%", ValueIntegralMIN: "-1", BackendName: "tapping_range_min" },
+        "MAX": { TableValuePlaceholder: "Positive Voltage Variation", ValueType: "number", DefaultValue: transformerBasicInfo?.tapping_range_max, ValueUnit: "%", ValueIntegralMAX: "1", BackendName: "tapping_range_max" },
+        "at %": { TableValuePlaceholder: "at %", ValueType: "number", DefaultValue: transformerBasicInfo?.tapping_percentage_at, ValueIntegralMIN: "1", BackendName: "tapping_percentage_at" },
+        "RATED FREQUENCY": { TableValuePlaceholder: "Rated Frequency", ValueType: "option", DefaultValue: transformerBasicInfo?.rated_frequency , OptionValue: RatedFrequencyOption, ValueUnit: "HZ", BackendName: "rated_frequency" }, // 50, 60
+        "CONDUCTOR MATERIAL": { TableValuePlaceholder: "Conductor Material", ValueType: "option", DefaultValue: transformerBasicInfo?.conductor_material , OptionValue: ConductorMaterialOption, BackendName: "conductor_material" } // Copper, Aluminum
     };
 
     const NextPreviousButtonState = [false,false];
     const NextPrevLink = [`/customer-details/${params.reportId}`,`/transformer-information/${params.reportId}`]
 
+    const UpdatedValue = {}
     const OnValueChange = (e)=>{
-        console.log(e);
+        UpdatedValue[e.target.name] = e.target.value;
+    }
+ 
+    const OnSaveClick = (e)=>{
+        console.log(UpdatedValue);
+        API.patch(`/transformer-basic-information/${idRef.current}/`,UpdatedValue).then((response) => {
+            toast.success("Success! Information updated successfully.");
+        }).catch((err) => {
+            
+        });
     }
 
     useEffect(() => {
         dispatch(setReportId(params.reportId));
+        API.get(`/transformer-basic-information/by-customer/${params.reportId}/`).then((response) => {
+            idRef.current = response?.data[0]?.id;
+            setTransformerBasicInfo(response.data[0]);
+        }).catch((err) => {
+            
+        });
     }, []);
 
     return (
         <div className="main-content">
+            <ToastContainer/>
             <div className="main-content-head">
                 Transformer Basic Information
             </div>
             <ContentTable TableContent={HomePageContent} OnValueChange={OnValueChange}/>
-            <NextPreviousButton State={NextPreviousButtonState} NextPrevLink={NextPrevLink} />
+            <NextPreviousButton OnSaveClick={OnSaveClick} State={NextPreviousButtonState} NextPrevLink={NextPrevLink} />
         </div>
     );
 }
