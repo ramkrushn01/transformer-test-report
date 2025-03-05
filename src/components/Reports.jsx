@@ -85,12 +85,12 @@ export default function Reports() {
                   <thead>
                       <tr>
                           <th>Sr.No.</th>
+                          <th>Rating</th>
                           <th>Customer Name</th>
                           <th>Work Order</th>
                           <th>Certificate No</th>
                           <th>Transformer Make</th>
                           <th>Serial No</th>
-                          <th>Rating</th>
                           <th>Reference Standard</th>
                           <th>Testing Date</th>
                           <th>Remark</th>
@@ -105,12 +105,12 @@ export default function Reports() {
                                   gotoReport(e, item.id);
                               }}>
                               <td>{index + 1}</td>
+                              <td>{item.rating}</td>
                               <td>{item.customer_name}</td>
                               <td>{item.work_order_number}</td>
                               <td>{item.certificate_number}</td>
                               <td>{item.transformer_make}</td>
                               <td>{item.serial_number}</td>
-                              <td>{item.rating}</td>
                               <td>{item.reference_standard}</td>
                               <td>{item.testing_date}</td>
                               <td>{item.remark}</td>
