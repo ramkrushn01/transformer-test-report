@@ -1,14 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ContentTable from "./common/ContentTable";
 import "../css/home.css";
 import NextPreviousButton from "./common/NextPreviousButton";
 import { useDispatch } from "react-redux";
 import { setReportId } from "../redux/features/reportIdSlice";
 import { useParams } from "react-router-dom";
+import API from "../api/custom_axios";
 
 export default function Home() {
     const dispatch = useDispatch();
     const params = useParams();
+    const idRef = useRef();
+    const [transformerTechnicalInfo, setTransformerTechnicalInfo] = useState();
     // const HomePage = { CellName:[TableValuePlaceholder, ValueType, DefaultValue, ValueUnit] }
     const HomePageContent = {
         // "RATED CAPACITY" : ["Rated Capacity", "number", "", "MVA"],
@@ -22,16 +25,16 @@ export default function Home() {
         // "RATED FREQUENCY": ["Rated Frequency", "number", 50 ,"HZ"],
         // "VOLTAGE VARIATION" : ["Voltage Variation", "text"],
 
-        "RATED CAPACITY": { TableValuePlaceholder: "Rated Capacity", ValueType: "number", DefaultValue: "", ValueUnit: "MVA" , name: ""},
-        "RATED HV VOLTAGE": { TableValuePlaceholder: "Rated Voltage On HV Winding", ValueType: "number", DefaultValue: "", ValueUnit: "KV" },
-        "RATED LV1 VOLTAGE": { TableValuePlaceholder: "Rated Voltage In LV1 Winding", ValueType: "number", DefaultValue: "", ValueUnit: "KV" },
-        "RATED LV2 VOLTAGE": { TableValuePlaceholder: "Rated Voltage In LV2 Winding", ValueType: "number", DefaultValue: "", ValueUnit: "KV" },
-        "RATED HV CURRENT": { TableValuePlaceholder: "Rated Current In HV Winding", ValueType: "number", DefaultValue: "", ValueUnit: "AMPS" },
-        "RATED LV1 CURRENT": { TableValuePlaceholder: "Rated Current In LV1 Winding", ValueType: "number", DefaultValue: "", ValueUnit: "AMPS" },
-        "RATED LV2 CURRENT": { TableValuePlaceholder: "Rated Current In LV2 Winding", ValueType: "number", DefaultValue: "", ValueUnit: "AMPS" },
-        "VECTOR GROUP": { TableValuePlaceholder: "Vector Group", ValueType: "text", DefaultValue: "" },
-        "RATED FREQUENCY": { TableValuePlaceholder: "Rated Frequency", ValueType: "number", DefaultValue: 50, ValueUnit: "HZ" },
-        "VOLTAGE VARIATION": { TableValuePlaceholder: "Voltage Variation", ValueType: "text", DefaultValue: "" }
+        "RATED CAPACITY": { TableValuePlaceholder: "Rated Capacity", ValueType: "number", DefaultValue: transformerTechnicalInfo?.rated_capacity, ValueUnit: "MVA" , name: "", BackendName: "rated_capacity"},
+        "RATED HV VOLTAGE": { TableValuePlaceholder: "Rated Voltage On HV Winding", ValueType: "number", DefaultValue: transformerTechnicalInfo?.rated_hv_voltage, ValueUnit: "KV", BackendName: "rated_hv_voltage", },
+        "RATED LV1 VOLTAGE": { TableValuePlaceholder: "Rated Voltage In LV1 Winding", ValueType: "number", DefaultValue: transformerTechnicalInfo?.rated_lv_voltage, ValueUnit: "KV", BackendName: "rated_lv_voltage" },
+        "RATED LV2 VOLTAGE": { TableValuePlaceholder: "Rated Voltage In LV2 Winding", ValueType: "number", DefaultValue: "", ValueUnit: "KV", BackendName: "rated_lv2_voltage" },
+        "RATED HV CURRENT": { TableValuePlaceholder: "Rated Current In HV Winding", ValueType: "number", DefaultValue: transformerTechnicalInfo?.rated_hv_current, ValueUnit: "AMPS", BackendName: "rated_hv_current" },
+        "RATED LV1 CURRENT": { TableValuePlaceholder: "Rated Current In LV1 Winding", ValueType: "number", DefaultValue: transformerTechnicalInfo?.rated_lv_current, ValueUnit: "AMPS", BackendName: "rated_lv_current" },
+        "RATED LV2 CURRENT": { TableValuePlaceholder: "Rated Current In LV2 Winding", ValueType: "number", DefaultValue: "", ValueUnit: "AMPS", BackendName: "rated_lv2_current" },
+        "VECTOR GROUP": { TableValuePlaceholder: "Vector Group", ValueType: "text", DefaultValue: transformerTechnicalInfo?.vector_group, BackendName: "vector_group" },
+        "RATED FREQUENCY": { TableValuePlaceholder: "Rated Frequency", ValueType: "number", DefaultValue: transformerTechnicalInfo?.rated_frequency, ValueUnit: "HZ", BackendName: "rated_frequency" },
+        "VOLTAGE VARIATION": { TableValuePlaceholder: "Voltage Variation", ValueType: "text", DefaultValue: transformerTechnicalInfo?.voltage_variation, BackendName: "voltage_variation" },
     };
 
     const NextPreviousButtonState = [false,false];
@@ -43,6 +46,13 @@ export default function Home() {
 
     useEffect(() => {
         dispatch(setReportId(params.reportId));
+        API.get(`/transformer-technical-information/by-customer/${params.reportId}`).then((response) => {
+            console.log(response.data);
+            idRef.current = response?.data[0]?.id;
+            setTransformerTechnicalInfo(response.data[0]);
+        }).catch((err) => {
+            console.log(err);
+        });
     }, []);
     
     return (
