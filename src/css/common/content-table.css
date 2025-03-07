@@ -36,3 +36,10 @@
     border-radius: 18px;
     width: 440px;
 }
+
+.main-table-content .main-table-data input[readonly] {
+    background-color: #f0f0f0; /* Light gray background */
+    color: #888; /* Dim the text color */
+    border: 1px solid #aaa; /* Subtle border */
+    cursor: not-allowed; /* Show not-allowed cursor */
+}

@@ -65,7 +65,6 @@ export default function TransformerBasicInfo() {
     }
  
     const OnSaveClick = (e)=>{
-        console.log(UpdatedValue);
         API.patch(`/transformer-basic-information/${idRef.current}/`,UpdatedValue).then((response) => {
             toast.success("Success! Information updated successfully.");
         }).catch((err) => {
