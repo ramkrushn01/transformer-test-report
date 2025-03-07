@@ -13,6 +13,7 @@ export default function Home() {
     const params = useParams();
     const idRef = useRef();
     const [transformerTechnicalInfo, setTransformerTechnicalInfo] = useState();
+    const [isSaving, setIsSaving] = useState(false);
     // const HomePage = { CellName:[TableValuePlaceholder, ValueType, DefaultValue, ValueUnit] }
     const HomePageContent = {
         // "RATED CAPACITY" : ["Rated Capacity", "number", "", "MVA"],
@@ -46,10 +47,13 @@ export default function Home() {
     }
 
     const OnSaveClick = (e)=>{
+        setIsSaving(true);
         API.patch(`/transformer-technical-information/${idRef.current}/`, UpdatedValue).then((response) => {
+            setIsSaving(false);
             toast.success("Success! Information updated successfully.");
         }).catch((err) => {
-            
+            setIsSaving(false);
+            toast.error(`Error! ${err}`);
         }); 
     }
 
@@ -70,7 +74,7 @@ export default function Home() {
                 Transformer Technical Information
             </div>
             <ContentTable TableContent={HomePageContent} OnValueChange={OnValueChange}/>
-            <NextPreviousButton OnSaveClick={OnSaveClick} State={NextPreviousButtonState} NextPrevLink={NextPrevLink} />
+            <NextPreviousButton isSaving={isSaving} OnSaveClick={OnSaveClick} State={NextPreviousButtonState} NextPrevLink={NextPrevLink} />
         </div>
     );
 }

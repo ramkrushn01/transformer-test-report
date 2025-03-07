@@ -11,6 +11,7 @@ export default function TransformerBasicInfo() {
     const params = useParams();
     const dispatch = useDispatch();
     const idRef = useRef();
+    const [isSaving, setIsSaving] = useState(false);
     const [transformerBasicInfo, setTransformerBasicInfo] = useState();
     const VectorGroupOption = {"Option" : ["Dyn11", "Dyn1", "YNd11", "YNd1", "DdO", "YNyno"], "default": "Dyn11"}
     const PhaseOption = {"Option" : ["Single Phase", "Three Phase"], "default":"Three Phase"}
@@ -90,10 +91,13 @@ export default function TransformerBasicInfo() {
     }
     
     const OnSaveClick = (e)=>{
+        setIsSaving(true);
         API.patch(`/transformer-basic-information/${idRef.current}/`,UpdatedValue).then((response) => {
+            setIsSaving(false);
             toast.success("Success! Information updated successfully.");
         }).catch((err) => {
-            
+            setIsSaving(false);
+            toast.error(`Error! ${err}`);
         });
     }
 
@@ -135,7 +139,7 @@ export default function TransformerBasicInfo() {
                 Transformer Basic Information
             </div>
             <ContentTable TableContent={homePageContent} OnValueChange={OnValueChange}/>
-            <NextPreviousButton OnSaveClick={OnSaveClick} State={NextPreviousButtonState} NextPrevLink={NextPrevLink} />
+            <NextPreviousButton isSaving={isSaving} OnSaveClick={OnSaveClick} State={NextPreviousButtonState} NextPrevLink={NextPrevLink} />
         </div>
     );
 }

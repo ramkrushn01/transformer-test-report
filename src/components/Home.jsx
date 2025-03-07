@@ -12,6 +12,7 @@ export default function Home() {
     const params = useParams('reportId');
     const dispatch = useDispatch();
     const idRef = useRef();
+    const [isSaving, setIsSaving] = useState(false);
     // console.log(params.reportId);
     const [customerData, setCustomerData] = useState();
     // const HomePage = { CellName:[TableValuePlaceholder, ValueType, DefaultValue, ValueUnit] }
@@ -44,11 +45,13 @@ export default function Home() {
     }
 
     const OnSaveClick = (e)=>{
-        console.log(UpdatedValue);
+        setIsSaving(true);
         API.patch(`/customer-details/${idRef.current}/`,UpdatedValue).then((response) => {
+            setIsSaving(false);
             toast.success("Success! Information updated successfully.");
         }).catch((err) => {
-            
+            setIsSaving(false);
+            toast.error(`Error! ${err}`);
         });
     }
 
@@ -73,7 +76,7 @@ export default function Home() {
                 Customer Details
             </div>
             <ContentTable TableContent={HomePageContent} OnValueChange={OnValueChange} />
-            <NextPreviousButton OnSaveClick={OnSaveClick} State={NextPreviousButtonState} NextPrevLink={NextPrevLink} />
+            <NextPreviousButton isSaving={isSaving} OnSaveClick={OnSaveClick} State={NextPreviousButtonState} NextPrevLink={NextPrevLink} />
         </div>
     );
 }
