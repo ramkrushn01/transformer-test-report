@@ -51,7 +51,7 @@
 
 /* Adds spacing for the ':' separator column */
 .main-table-content .main-table-data + td {
-    padding: 10px 8px; /* Provides spacing for side `td` elements */
+    padding: 10px 30px; /* Provides spacing for side `td` elements */
     vertical-align: middle;
 }
 
