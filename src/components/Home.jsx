@@ -45,6 +45,9 @@ export default function Home() {
     }
 
     const OnSaveClick = (e)=>{
+        if(Object.keys(UpdatedValue).length === 0){
+            return
+        }
         setIsSaving(true);
         API.patch(`/customer-details/${idRef.current}/`,UpdatedValue).then((response) => {
             setIsSaving(false);

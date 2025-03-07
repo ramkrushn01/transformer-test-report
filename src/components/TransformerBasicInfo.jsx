@@ -91,6 +91,9 @@ export default function TransformerBasicInfo() {
     }
     
     const OnSaveClick = (e)=>{
+        if(Object.keys(UpdatedValue).length === 0){
+            return
+        }
         setIsSaving(true);
         API.patch(`/transformer-basic-information/${idRef.current}/`,UpdatedValue).then((response) => {
             setIsSaving(false);

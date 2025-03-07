@@ -47,6 +47,9 @@ export default function Home() {
     }
 
     const OnSaveClick = (e)=>{
+        if(Object.keys(UpdatedValue).length === 0){
+            return
+        }
         setIsSaving(true);
         API.patch(`/transformer-technical-information/${idRef.current}/`, UpdatedValue).then((response) => {
             setIsSaving(false);
