@@ -45,9 +45,14 @@ export default function Sidebar() {
 
             {/* Toggle Button (Always Visible) */}
             </div>
-            <button className="sidebar-toggle" onClick={() => setIsOpen(!isOpen)}>
+            <div className={`extra ${isOpen ? "open" : "closed"}`} onClick={(e)=>setIsOpen(true)}>
+                <button className="sidebar-toggle" onClick={(e) => { 
+                    e.stopPropagation();
+                    setIsOpen(!isOpen);
+                }}>
                 {isOpen ? <FaAngleLeft size={18} /> : <FaAngleRight size={18} />}
-            </button>
+                </button>
+            </div>
         </div>
     );
 }

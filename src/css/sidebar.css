@@ -99,16 +99,26 @@
     transition: all 0.3s ease-in-out;
     display: flex;
     align-items: center;
-    justify-content: center;
-    
+    justify-content: center;   
+}
+.to-adjust-toggle .extra.open{
+    width: 0%;
 }
 
 /* ======== Responsive Design ======== */
 @media (max-width: 768px) {
     .to-adjust-toggle{
+        width: 100%;
         position: absolute;
         z-index: 10;
     }
+
+    .to-adjust-toggle .extra.closed{
+        background-color: rgba(30, 58, 138, 0.6);
+        backdrop-filter: blur(1px);
+        width: 100%;
+    }
+
     .main-sidebar {
         max-width: 250px;
     }
