@@ -1,4 +1,7 @@
 /* ======== Sidebar Container ======== */
+.to-adjust-toggle{
+    display: flex;
+}
 .main-sidebar {
     display: flex;
     flex-direction: column;
@@ -11,6 +14,12 @@
     scrollbar-width: thin; /* For Firefox */
     scrollbar-color: #2563eb #f1f1f1; /* Scrollbar color */
     padding: 10px 0;
+    transition:  all 0.1s ease-in-out;
+    
+}
+
+.main-sidebar.closed{
+    max-width: 0px;
 }
 
 /* ======== Custom Scrollbar (For WebKit Browsers) ======== */
@@ -78,10 +87,39 @@
     font-weight: 600;
 }
 
+.sidebar-toggle{
+    margin-top: 16px;
+    width: 30px;
+    height: 30px;
+    background: #1e3a8a;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 0px 10px 10px 0px;
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
 /* ======== Responsive Design ======== */
 @media (max-width: 768px) {
     .main-sidebar {
         max-width: 250px;
+    }
+
+    .main-sidebar.closed{
+        max-width: 300px;
+    }
+
+    .main-sidebar.open{
+        max-width: 0px;
+    }
+
+    .sidebar-toggle{
+        transform: rotate(180deg);
+        border-radius: 10px 0px 0px 10px;
     }
 
     .main-sidebar .side-list-item {

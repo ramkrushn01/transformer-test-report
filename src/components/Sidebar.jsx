@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import "../css/sidebar.css";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 
 export default function Sidebar() {
-    const reportId = useSelector((state)=> state.reportId.reportId);
+    const [isOpen, setIsOpen] = useState(true);
+    const reportId = useSelector((state) => state.reportId.reportId);
+    const PageLocation = useLocation();
+
     const SideBarContentList = [
         { text: "Customer Details", link: `/customer-details/${reportId}` },
         { text: "Transformer Basic Information", link: `/transformer-basic-info/${reportId}` },
@@ -22,15 +26,28 @@ export default function Sidebar() {
         { text: "Induced Over Voltage Test", link: `/induced-over-voltage-test/${reportId}` },
     ];
 
-    const PageLocation = useLocation();
-
     return (
-        <div className="main-sidebar">
-            <ul className="side-list">
-                {SideBarContentList.map((item, index) => (
-                    <li className={`side-list-item ${PageLocation.pathname.split("/")[1] === item.link.split("/")[1] && "active"}`} key={index}> <Link className="side-link" to={item.link}>{item.text}</Link> </li>
-                ))}
-            </ul>
+        
+        <div className="to-adjust-toggle">
+            <div className={`main-sidebar ${isOpen ? "open" : "closed"}`}>
+                <ul className="side-list">
+                    {SideBarContentList.map((item, index) => (
+                        <li
+                            className={`side-list-item ${
+                                PageLocation.pathname.split("/")[1] === item.link.split("/")[1] ? "active" : ""
+                            }`}
+                            key={index}
+                        >
+                            <Link className="side-link" to={item.link}>{item.text}</Link>
+                        </li>
+                    ))}
+                </ul>
+
+            {/* Toggle Button (Always Visible) */}
+            </div>
+            <button className="sidebar-toggle" onClick={() => setIsOpen(!isOpen)}>
+                {isOpen ? <FaAngleLeft size={18} /> : <FaAngleRight size={18} />}
+            </button>
         </div>
     );
 }
