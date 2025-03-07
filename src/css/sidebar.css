@@ -119,7 +119,7 @@
     .to-adjust-toggle .extra.closed{
         background-color: rgba(30, 58, 138, 0.6);
         backdrop-filter: blur(1px);
-        width: 100%;
+        width: 40%;
     }
 
     .main-sidebar {
@@ -127,7 +127,7 @@
     }
 
     .main-sidebar.closed{
-        max-width: 300px;
+        max-width: 70%;
     }
 
     .main-sidebar.open{
