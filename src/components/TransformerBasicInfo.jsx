@@ -58,10 +58,11 @@ export default function TransformerBasicInfo() {
     const NextPreviousButtonState = [false,false];
     const NextPrevLink = [`/customer-details/${params.reportId}`,`/transformer-information/${params.reportId}`]
 
-    let UpdatedValue = {}
+    const [UpdatedValue, setUpdatedValue] = useState({});
     const OnValueChange = (e)=>{
         if(e.target.name === 'tapping'){
-            console.log(e.target.value)
+            UpdatedValue[e.target.name] = e.target.value;
+
             const tapping = e.target.value === "Yes" ? false : true
             setHomePageContent((prev) => ({
                 ...prev,
@@ -87,7 +88,11 @@ export default function TransformerBasicInfo() {
                 }}))
         }
 
-        UpdatedValue[e.target.name] = e.target.value;
+        setUpdatedValue((prev) => ({
+            ...prev,
+            [e.target.name]: e.target.value
+        }));
+
     }
     
     const OnSaveClick = (e)=>{
@@ -99,7 +104,7 @@ export default function TransformerBasicInfo() {
         API.patch(`/transformer-basic-information/${idRef.current}/`,UpdatedValue).then((response) => {
             setIsSaving(false);
             toast.success("Success! Information updated successfully.");
-            UpdatedValue = {};
+            setUpdatedValue({});
         }).catch((err) => {
             setIsSaving(false);
             toast.error(`Error! ${err}`);
@@ -111,6 +116,7 @@ export default function TransformerBasicInfo() {
         API.get(`/transformer-basic-information/by-customer/${params.reportId}/`).then((response) => {
             idRef.current = response?.data[0]?.id;
             const RespData = response?.data[0];
+            const isTappingReadOnly = RespData.tapping === "No" ? true : false; 
             setHomePageContent(
                 (prev)=>({
                     ...prev,
@@ -121,12 +127,12 @@ export default function TransformerBasicInfo() {
                     "PHASE": { ...prev["PHASE"], DefaultValue: RespData.phase },
                     "No OF LV WINDING": { ...prev["No OF LV WINDING"], DefaultValue: RespData.no_of_lv_winding },
                     "TAPPING": { ...prev["TAPPING"], DefaultValue: RespData.tapping },
-                    "TYPE OF TAPPING": { ...prev["TYPE OF TAPPING"], DefaultValue: RespData.type_of_tapping },
-                    "TAPPING ON": { ...prev["TAPPING ON"], DefaultValue: RespData.tapping_on },
-                    "TAPPING RANGE": { ...prev["TAPPING RANGE"], DefaultValue: RespData.tapping_range },
-                    "MIN": { ...prev["MIN"], DefaultValue: RespData.tapping_range_min },
-                    "MAX": { ...prev["MAX"], DefaultValue: RespData.tapping_range_max },
-                    "at %": { ...prev["at %"], DefaultValue: RespData.tapping_percentage_at },
+                    "TYPE OF TAPPING": { ...prev["TYPE OF TAPPING"], DefaultValue: RespData.type_of_tapping, ReadOnly: isTappingReadOnly },
+                    "TAPPING ON": { ...prev["TAPPING ON"], DefaultValue: RespData.tapping_on, ReadOnly: isTappingReadOnly },
+                    "TAPPING RANGE": { ...prev["TAPPING RANGE"], DefaultValue: RespData.tapping_range, ReadOnly: isTappingReadOnly },
+                    "MIN": { ...prev["MIN"], DefaultValue: RespData.tapping_range_min, ReadOnly: isTappingReadOnly },
+                    "MAX": { ...prev["MAX"], DefaultValue: RespData.tapping_range_max, ReadOnly: isTappingReadOnly },
+                    "at %": { ...prev["at %"], DefaultValue: RespData.tapping_percentage_at, ReadOnly: isTappingReadOnly },
                     "RATED FREQUENCY": { ...prev["RATED FREQUENCY"], DefaultValue: RespData.rated_frequency },
                     "CONDUCTOR MATERIAL": { ...prev["CONDUCTOR MATERIAL"], DefaultValue: RespData.conductor_material },
                 })
