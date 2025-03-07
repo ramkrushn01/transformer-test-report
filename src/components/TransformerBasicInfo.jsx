@@ -58,7 +58,7 @@ export default function TransformerBasicInfo() {
     const NextPreviousButtonState = [false,false];
     const NextPrevLink = [`/customer-details/${params.reportId}`,`/transformer-information/${params.reportId}`]
 
-    const UpdatedValue = {}
+    let UpdatedValue = {}
     const OnValueChange = (e)=>{
         if(e.target.name === 'tapping'){
             console.log(e.target.value)
@@ -92,12 +92,14 @@ export default function TransformerBasicInfo() {
     
     const OnSaveClick = (e)=>{
         if(Object.keys(UpdatedValue).length === 0){
+            toast.info("Info! Nothing to save",{autoClose:1000})
             return
         }
         setIsSaving(true);
         API.patch(`/transformer-basic-information/${idRef.current}/`,UpdatedValue).then((response) => {
             setIsSaving(false);
             toast.success("Success! Information updated successfully.");
+            UpdatedValue = {};
         }).catch((err) => {
             setIsSaving(false);
             toast.error(`Error! ${err}`);

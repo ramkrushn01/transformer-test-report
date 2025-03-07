@@ -38,7 +38,7 @@ export default function Home() {
         "REMARK": { TableValuePlaceholder: "Remark", ValueType: "text", DefaultValue: customerData?.remark, BackendName: "remark" },
     };
 
-    const UpdatedValue ={}
+    let UpdatedValue ={}
 
     const OnValueChange = (e)=>{
         UpdatedValue[e.target.name] = e.target.value;
@@ -46,12 +46,14 @@ export default function Home() {
 
     const OnSaveClick = (e)=>{
         if(Object.keys(UpdatedValue).length === 0){
+            toast.info("Info! Nothing to save",{autoClose:1000})
             return
         }
         setIsSaving(true);
         API.patch(`/customer-details/${idRef.current}/`,UpdatedValue).then((response) => {
             setIsSaving(false);
             toast.success("Success! Information updated successfully.");
+            UpdatedValue = {};
         }).catch((err) => {
             setIsSaving(false);
             toast.error(`Error! ${err}`);
