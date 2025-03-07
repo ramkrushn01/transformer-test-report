@@ -40,10 +40,13 @@ export default function Home() {
     const NextPreviousButtonState = [false,false];
     const NextPrevLink = [`/transformer-basic-info/${params.reportId}`,`/transformer-information/${params.reportId}`]
 
-    let UpdatedValue = {}
+    let [UpdatedValue, setUpdatedValue] = useState({});
 
     const OnValueChange = (e)=>{
-        UpdatedValue[e.target.name] = e.target.value
+        setUpdatedValue((prev) => ({
+            ...prev,
+            [e.target.name]: e.target.value
+        }));
     }
 
     const OnSaveClick = (e)=>{
@@ -55,7 +58,7 @@ export default function Home() {
         API.patch(`/transformer-technical-information/${idRef.current}/`, UpdatedValue).then((response) => {
             setIsSaving(false);
             toast.success("Success! Information updated successfully.");
-            UpdatedValue = {};
+            setUpdatedValue({});
         }).catch((err) => {
             setIsSaving(false);
             toast.error(`Error! ${err}`);
