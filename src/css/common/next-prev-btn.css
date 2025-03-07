@@ -1,58 +1,72 @@
+/* ======== Button Container ======== */
 .main-next-prev-btn {
     display: flex;
-    justify-content: space-around;
-    gap: 20px; 
+    justify-content: center;
+    gap: 40px; /* Balanced spacing */
     align-items: center;
     width: 100%;
-    padding: 22px 0;
+    padding: 16px 0;
 }
 
+/* ======== General Button Styling (Smaller Size) ======== */
 .main-next-prev-btn .prev-btn,
 .main-next-prev-btn .next-btn,
 .main-next-prev-btn .save-btn {
-    background: linear-gradient(to right, #6bb9f0, #3498db); /* Light Blue Gradient */
+    background: linear-gradient(to right, #007aff, #0056b3); /* Professional Blue Gradient */
     color: white;
-    padding: 12px 0px;
-    font-size: 16px;
+    padding: 8px 0; /* Smaller height */
+    font-size: 14px; /* Smaller font size */
     font-weight: 500;
     border: none;
-    border-radius: 25px; 
+    border-radius: 6px; /* Slightly rounded edges */
     cursor: pointer;
-    transition: 0.5s;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-    width: 120px; 
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+    width: 100px; /* Smaller width */
     text-align: center;
     text-decoration: none;
+    min-width: 90px;
 }
 
-.main-next-prev-btn .save-btn{
-    background: linear-gradient(to right, #6bf072, #42db34);   
+/* ======== Save Button Styling (Professional Green) ======== */
+.main-next-prev-btn .save-btn {
+    background: linear-gradient(to right, #28a745, #1e7e34);
+    width: 95px;
 }
 
+/* ======== Hover Effects ======== */
 .main-next-prev-btn .prev-btn:hover,
 .main-next-prev-btn .next-btn:hover {
-    background: linear-gradient(to right, #3498db, #2980b9);
+    background: linear-gradient(to right, #0056b3, #004191);
 }
 
+.main-next-prev-btn .save-btn:hover {
+    background: linear-gradient(to right, #1e7e34, #155724);
+}
+
+/* ======== Active Effects (Click) ======== */
 .main-next-prev-btn .prev-btn:active,
-.main-next-prev-btn .next-btn:active {
-    transform: scale(0.95);
+.main-next-prev-btn .next-btn:active,
+.main-next-prev-btn .save-btn:active {
+    transform: scale(0.96);
 }
 
+/* ======== Previous Button Styling (Softer Blue) ======== */
 .main-next-prev-btn .prev-btn {
-    background: linear-gradient(to right, #85c1e9, #5dade2);
+    background: linear-gradient(to left, #007aff, #0056b3); /* Professional Blue Gradient */
 }
 
 .main-next-prev-btn .prev-btn:hover {
-    background: linear-gradient(to right, #5dade2, #2e86c1);
+    background: linear-gradient(to left, #0056b3, #004191);
 }
 
+/* ======== Disabled Button Styling ======== */
 .main-next-prev-btn .btn-disable {
-    background: linear-gradient(to right, #b0b0b0, #8c8c8c); /* Darker Grey Gradient */
-    color: #666; /* Darker text for better contrast */
+    background: linear-gradient(to right, #b0b0b0, #8c8c8c);
+    color: #fff;
     cursor: not-allowed;
     box-shadow: none;
-    opacity: 0.6;
+    opacity: 0.7;
     pointer-events: none;
 }
 
@@ -60,4 +74,19 @@
 .main-next-prev-btn .btn-disable:active {
     background: linear-gradient(to right, #b0b0b0, #8c8c8c);
     transform: none;
+}
+
+/* ======== Responsive Design ======== */
+@media (max-width: 768px) {
+    .main-next-prev-btn {
+        gap: 16px;
+    }
+
+    .main-next-prev-btn .prev-btn,
+    .main-next-prev-btn .next-btn,
+    .main-next-prev-btn .save-btn {
+        width: 90px;
+        font-size: 13px; /* Slightly smaller font size for mobile */
+        padding: 7px 0;
+    }
 }
