@@ -12,17 +12,15 @@ export default function TransformerBasicInfo() {
     const dispatch = useDispatch();
     const idRef = useRef();
     const [transformerBasicInfo, setTransformerBasicInfo] = useState();
- // const HomePage = { CellName:[TableValuePlaceholder, ValueType, DefaultValue, ValueUnit, ValueIntegralMIN, ValueIntegralMIN] }
     const VectorGroupOption = {"Option" : ["Dyn11", "Dyn1", "YNd11", "YNd1", "DdO", "YNyno"], "default": "Dyn11"}
     const PhaseOption = {"Option" : ["Single Phase", "Three Phase"], "default":"Three Phase"}
-    // const NoOfLVWindingOption = {"Option": []}
     const TappingOption = {"Option": ["Yes","No"], "default":"Yes"}
     const TypeOfTappingOption = {"Option": ["OCTC","OLTC"], "default":"OCTC"}
     const TappingOnOption = {"Option": ["HV","LV"], "default":"HV"}
     const RatedFrequencyOption = {"Option": [50, 60], "default":50}
     const ConductorMaterialOption = {"Option": ["Copper", "Aluminum"], "default":"Copper"}
 
-    const HomePageContent = {
+    const [homePageContent, setHomePageContent] = useState({
         // "CAPACITY" : ["Capacity", "number", "", "KVA", "1","315000"], 
         // "HV VOLTAGE" : ["HV Winding Voltage", "number","","VOLTS", "1"],
         // "LV VOLTAGE" : ["LV Winding Voltage", "number", "" , "VOLTS", "1"],
@@ -45,7 +43,7 @@ export default function TransformerBasicInfo() {
         "VECTOR GROUP": { TableValuePlaceholder: "Vector Group", ValueType: "option", DefaultValue: transformerBasicInfo?.vector_group , OptionValue: VectorGroupOption, BackendName: "vector_group" },
         "PHASE": { TableValuePlaceholder: "Phase", ValueType: "option", DefaultValue: transformerBasicInfo?.phase , OptionValue: PhaseOption, BackendName: "phase" },
         "No OF LV WINDING": { TableValuePlaceholder: "No of LV Windings", ValueType: "number", DefaultValue: transformerBasicInfo?.no_of_lv_winding, ValueIntegralMIN: "1", BackendName: "no_of_lv_winding" },
-        "TAPPING": { TableValuePlaceholder: "Tapping", ValueType: "option", DefaultValue: transformerBasicInfo?.tapping , OptionValue: TappingOption, BackendValue: "tapping" }, // yes/no
+        "TAPPING": { TableValuePlaceholder: "Tapping", ValueType: "option", DefaultValue: transformerBasicInfo?.tapping , OptionValue: TappingOption, BackendName: "tapping" }, // yes/no
         "TYPE OF TAPPING": { TableValuePlaceholder: "Type of Tapping", ValueType: "option", DefaultValue: transformerBasicInfo?.type_of_tapping , OptionValue: TypeOfTappingOption, BackendName: "type_of_tapping" }, // OCTC OLTC
         "TAPPING ON": { TableValuePlaceholder: "Tapping On", ValueType: "option", DefaultValue: transformerBasicInfo?.tapping_on , OptionValue: TappingOnOption, BackendName: "tapping_on" }, // HV LV
         "TAPPING RANGE": { TableValuePlaceholder: "", ValueType: "hidden", DefaultValue: transformerBasicInfo?.tapping_range, BackendName: "tapping_range" },
@@ -54,16 +52,43 @@ export default function TransformerBasicInfo() {
         "at %": { TableValuePlaceholder: "at %", ValueType: "number", DefaultValue: transformerBasicInfo?.tapping_percentage_at, ValueIntegralMIN: "1", BackendName: "tapping_percentage_at" },
         "RATED FREQUENCY": { TableValuePlaceholder: "Rated Frequency", ValueType: "option", DefaultValue: transformerBasicInfo?.rated_frequency , OptionValue: RatedFrequencyOption, ValueUnit: "HZ", BackendName: "rated_frequency" }, // 50, 60
         "CONDUCTOR MATERIAL": { TableValuePlaceholder: "Conductor Material", ValueType: "option", DefaultValue: transformerBasicInfo?.conductor_material , OptionValue: ConductorMaterialOption, BackendName: "conductor_material" } // Copper, Aluminum
-    };
+    });
 
     const NextPreviousButtonState = [false,false];
     const NextPrevLink = [`/customer-details/${params.reportId}`,`/transformer-information/${params.reportId}`]
 
     const UpdatedValue = {}
     const OnValueChange = (e)=>{
+        if(e.target.name === 'tapping'){
+            console.log(e.target.value)
+            const tapping = e.target.value === "Yes" ? false : true
+            setHomePageContent((prev) => ({
+                ...prev,
+                "TYPE OF TAPPING": {
+                    ...prev["TYPE OF TAPPING"],
+                    ReadOnly: tapping
+                },
+                "TAPPING ON": {
+                    ...prev["TAPPING ON"],
+                    ReadOnly: tapping
+                },
+                "MIN": {
+                    ...prev["MIN"],
+                    ReadOnly: tapping,
+                },
+                "MAX": {
+                    ...prev["MAX"],
+                    ReadOnly: tapping
+                },
+                "at %": {
+                    ...prev["at %"],
+                    ReadOnly: tapping
+                }}))
+        }
+
         UpdatedValue[e.target.name] = e.target.value;
     }
- 
+    
     const OnSaveClick = (e)=>{
         API.patch(`/transformer-basic-information/${idRef.current}/`,UpdatedValue).then((response) => {
             toast.success("Success! Information updated successfully.");
@@ -76,6 +101,27 @@ export default function TransformerBasicInfo() {
         dispatch(setReportId(params.reportId));
         API.get(`/transformer-basic-information/by-customer/${params.reportId}/`).then((response) => {
             idRef.current = response?.data[0]?.id;
+            const RespData = response?.data[0];
+            setHomePageContent(
+                (prev)=>({
+                    ...prev,
+                    "CAPACITY": { ...prev["CAPACITY"], DefaultValue: RespData.capacity },
+                    "HV VOLTAGE": { ...prev["HV VOLTAGE"], DefaultValue: RespData.hv_voltage },
+                    "LV VOLTAGE": { ...prev["LV VOLTAGE"], DefaultValue: RespData.lv_voltage },
+                    "VECTOR GROUP": { ...prev["VECTOR GROUP"], DefaultValue: RespData.vector_group },
+                    "PHASE": { ...prev["PHASE"], DefaultValue: RespData.phase },
+                    "No OF LV WINDING": { ...prev["No OF LV WINDING"], DefaultValue: RespData.no_of_lv_winding },
+                    "TAPPING": { ...prev["TAPPING"], DefaultValue: RespData.tapping },
+                    "TYPE OF TAPPING": { ...prev["TYPE OF TAPPING"], DefaultValue: RespData.type_of_tapping },
+                    "TAPPING ON": { ...prev["TAPPING ON"], DefaultValue: RespData.tapping_on },
+                    "TAPPING RANGE": { ...prev["TAPPING RANGE"], DefaultValue: RespData.tapping_range },
+                    "MIN": { ...prev["MIN"], DefaultValue: RespData.tapping_range_min },
+                    "MAX": { ...prev["MAX"], DefaultValue: RespData.tapping_range_max },
+                    "at %": { ...prev["at %"], DefaultValue: RespData.tapping_percentage_at },
+                    "RATED FREQUENCY": { ...prev["RATED FREQUENCY"], DefaultValue: RespData.rated_frequency },
+                    "CONDUCTOR MATERIAL": { ...prev["CONDUCTOR MATERIAL"], DefaultValue: RespData.conductor_material },
+                })
+            )
             setTransformerBasicInfo(response.data[0]);
         }).catch((err) => {
             
@@ -88,7 +134,7 @@ export default function TransformerBasicInfo() {
             <div className="main-content-head">
                 Transformer Basic Information
             </div>
-            <ContentTable TableContent={HomePageContent} OnValueChange={OnValueChange}/>
+            <ContentTable TableContent={homePageContent} OnValueChange={OnValueChange}/>
             <NextPreviousButton OnSaveClick={OnSaveClick} State={NextPreviousButtonState} NextPrevLink={NextPrevLink} />
         </div>
     );
