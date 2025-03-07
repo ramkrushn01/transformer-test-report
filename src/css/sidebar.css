@@ -105,6 +105,10 @@
 
 /* ======== Responsive Design ======== */
 @media (max-width: 768px) {
+    .to-adjust-toggle{
+        position: absolute;
+        z-index: 10;
+    }
     .main-sidebar {
         max-width: 250px;
     }
