@@ -1,105 +1,150 @@
+/* ======== Reports Page Container ======== */
 .main-reports {
-	/* background-color: rebeccapurple; */
-	/* width: 100%; */
-	/* height: 100px; */
+    padding: 20px;
+    font-family: 'Inter', sans-serif;
+    color: #333;
 }
 
+/* ======== Reports Header ======== */
 .main-reports .reports-head {
-	display: flex;
-	justify-content: space-between;
-	/* width: 99%; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
-.main-reports .reports-head .left-head{
+/* ======== Report Title ======== */
+.main-reports .reports-head .head-txt {
+    font-size: 22px;
+    font-weight: 600;
+    color: #1f2937;
 }
 
+/* ======== Create Report Button ======== */
 .main-reports .btn-create {
     display: flex;
-	align-items: center;
-	justify-content: space-between;
-    padding: 10px 16px;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 18px;
     font-size: 14px;
     font-weight: 500;
     color: white;
     border: none;
-    background: #007bff; /* Light Blue Theme */
-    border-radius: 8px 0px 0px 0px;
+    background: linear-gradient(to right, #007bff, #0056b3); /* Professional Blue Gradient */
+    border-radius: 6px;
     cursor: pointer;
-    text-align: center;
     transition: all 0.3s ease-in-out;
-    text-decoration: none; /* If used as a link */
 }
 
 .main-reports .btn-create:hover {
-    background: #0056b3; /* Darker Blue on Hover */
+    background: linear-gradient(to right, #0056b3, #00448a);
 }
 
 .main-reports .btn-create:active {
-    background: #004085; /* Even Darker Blue on Click */
-    transform: scale(0.98); /* Click effect */
+    background: #004085;
+    transform: scale(0.98);
 }
 
-/* Center the Button */
-.main-reports .create-report-container {
-    text-align: center;
-    margin-top: 20px;
+.main-reports .btn-create:disabled {
+    background: #6c757d;
+    cursor: not-allowed;
+    opacity: 0.6;
 }
 
-
-.main-reports .reports-head .right-head{
-	align-self: flex-end;
-}
-
-.main-reports .reports-head .head-txt {
-	/* text-align: center; */
-	margin-block: 20px;
-	font-weight: 500;
-	font-size: 24px;
-}
-
+/* ======== Table Container ======== */
 .main-reports .table-container {
-	display: flex;
-	justify-content: center;
+    display: flex;
+    justify-content: center;
+    overflow-x: auto;
+    padding-top: 10px;
 }
 
+/* ======== Styled Table ======== */
 .main-reports .styled-table {
-	min-width: 100%;
-	border-collapse: collapse;
-	font-family: Arial, sans-serif;
-	background-color: #e6f7ff;
-	/* Light Blue Background */
-	box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-	/* border-radius: 8px; */
-	overflow: hidden;
+    width: 100%;
+    max-width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    background-color: #f8fafc; /* Light neutral background */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    overflow: hidden;
 }
 
-.main-reports .styled-table th,
-.main-reports .styled-table td {
-	border: 1px solid #b3e0ff;
-	padding: 12px;
-	text-align: left;
-}
-
+/* ======== Table Header ======== */
 .main-reports .styled-table th {
-	background-color: #b3e0ff;
-	/* Header Light Blue */
-	color: #003366;
-	font-weight: bold;
+    background: #007bff; /* Dark Blue */
+    color: white;
+    font-weight: 600;
+    text-align: left;
+    padding: 12px;
+}
+
+/* ======== Table Body ======== */
+.main-reports .styled-table td {
+    border-bottom: 1px solid #dee2e6;
+    padding: 10px;
+    text-align: left;
 }
 
 .main-reports .styled-table tbody tr {
-	cursor: pointer;
+    cursor: pointer; /* Indicates rows are clickable */
+    transition: background 0.2s ease-in-out;
 }
 
-.main-reports .styled-table tbody tr:hover {
-	background-color: #cceeff;
-}
-
+/* Alternate Row Background */
 .main-reports .styled-table tbody tr:nth-child(even) {
-	background-color: #f2f9ff;
+    background-color: #f1f5f9;
 }
 
+/* Hover Effect */
+.main-reports .styled-table tbody tr:hover {
+	background-color: #f3f4f6; /* Light blue hover effect */
+    transition: background 0.2s ease-in-out;
+}
+
+/* ======== No Record Styling ======== */
 .main-reports .no-record {
-	font-size: 18px;
-	text-align: center !important;
+    font-size: 16px;
+    text-align: center;
+    color: #6c757d;
+    padding: 20px;
+}
+
+/* ======== Delete Button Styling ======== */
+.main-reports .btn-delete {
+    background: none;
+    border: none;
+    color: #d32f2f;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.main-reports .btn-delete:hover {
+    color: #b71c1c;
+    transform: scale(1.1);
+}
+
+/* ======== Responsive Design ======== */
+@media (max-width: 768px) {
+    .main-reports {
+        padding: 10px;
+    }
+
+    .main-reports .reports-head {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .main-reports .btn-create {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .main-reports .styled-table th,
+    .main-reports .styled-table td {
+        font-size: 14px;
+        padding: 8px;
+    }
 }
