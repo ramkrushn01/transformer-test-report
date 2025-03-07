@@ -107,7 +107,7 @@
 
 /* ======== Responsive Design ======== */
 @media (max-width: 768px) {
-    .to-adjust-toggle{
+    .to-adjust-toggle.closed{
         width: 100%;
         position: absolute;
         z-index: 10;

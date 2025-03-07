@@ -28,7 +28,7 @@ export default function Sidebar() {
 
     return (
         
-        <div className="to-adjust-toggle">
+        <div className={`to-adjust-toggle ${isOpen ? "open" : "closed"}`}>
             <div className={`main-sidebar ${isOpen ? "open" : "closed"}`}>
                 <ul className="side-list">
                     {SideBarContentList.map((item, index) => (
