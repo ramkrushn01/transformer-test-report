@@ -1,52 +1,120 @@
-.main-table-content{
-
+/* ======== Table Container ======== */
+.main-table-content {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: #333;
+    padding: 10px;
 }
 
-.main-table-content .main-table{
-    margin-inline: auto;
-    border-spacing: 0 18px;
+/* ======== Table Styling ======== */
+.main-table-content .main-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: auto;
 }
 
-.main-table-content .main-table-body{
-    font-size: 18px;
-}
-
-.main-table-content .main-table-row{
-    padding-block: 12px;
-}
-
-.main-table-content .main-table-head{
-    padding-inline: 22px;
+/* ======== Table Head Styling ======== */
+.main-table-content .main-table-head {
+    font-weight: 600;
     text-align: left;
+    padding: 10px 14px;
+}
+
+/* Head Label */
+.main-table-content .main-table-head .main-table-head-label {
+    display: block;
+    font-size: 15px;
     font-weight: 500;
+    margin-bottom: 4px;
 }
 
-.main-table-content .main-table-head .main-table-head-label{
+/* ======== Table Body Styling ======== */
+.main-table-content .main-table-body {
+    font-size: 16px;
 }
 
-.main-table-content .main-table-data{
-    padding-inline: 22px;
+/* ======== Table Row Styling ======== */
+.main-table-content .main-table-row {
+    height: 42px; /* Adjusted for better spacing */
+    transition: transform 0.2s ease-in-out;
 }
 
-.main-table-content .main-table-data .main-table-data-input{
-    font-size: 18px;
-    padding-inline: 12px;
-    padding-block: 6px;
-    border: 0px;
-    border-radius: 18px;
-    width: 440px;
+.main-table-content .main-table-row:hover {
+    transform: translateY(-1px); /* Subtle hover effect */
 }
 
-.main-table-content .main-table-data input[readonly] {
-    background-color: #f0f0f0; /* Light gray background */
-    color: #888; /* Dim the text color */
-    /* border: 1px solid #aaa; Subtle border */
-    cursor: not-allowed; /* Show not-allowed cursor */
+/* ======== Table Data Styling (Includes Value Unit Spacing) ======== */
+.main-table-content .main-table-data {
+    padding: 10px 14px; /* Adds vertical and horizontal spacing */
+    vertical-align: middle;
 }
 
+/* Adds spacing for the ':' separator column */
+.main-table-content .main-table-data + td {
+    padding: 10px 8px; /* Provides spacing for side `td` elements */
+    vertical-align: middle;
+}
+
+/* Adds vertical spacing for `.value-unit` */
+.main-table-content .value-unit {
+    padding-left: 10px; /* Adds left spacing */
+    vertical-align: middle;
+    font-size: 15px;
+}
+
+/* ======== Input Fields (No Borders) ======== */
+.main-table-content .main-table-data .main-table-data-input {
+    font-size: 16px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    width: 100%;
+    max-width: 350px;
+    transition: all 0.2s ease-in-out;
+    outline: none;
+}
+
+/* Input Focus Effect */
+.main-table-content .main-table-data .main-table-data-input:focus {
+    outline: none;
+    box-shadow: 0 0 4px rgba(0, 123, 255, 0.2);
+}
+
+/* ======== Readonly Inputs & Selects (No Borders) ======== */
+.main-table-content .main-table-data input[readonly],
 .main-table-content .main-table-data select[readonly] {
-    background-color: #f0f0f0; /* Light gray background */
-    color: #888; /* Dim the text color */
-    /* border: 1px solid #aaa; Subtle border */
-    cursor: not-allowed; /* Show not-allowed cursor */
+    color: #888;
+    cursor: not-allowed;
+}
+
+/* ======== Select Dropdown (No Borders) ======== */
+.main-table-content .main-table-data select {
+    font-size: 16px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    width: 100%;
+    max-width: 350px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    outline: none;
+}
+
+/* Select Focus Effect */
+.main-table-content .main-table-data select:focus {
+    outline: none;
+}
+
+/* ======== Loop Input Component Styling ======== */
+.main-table-content .loop-input {
+    padding: 10px;
+    width: 100%;
+}
+
+/* ======== Responsive Design ======== */
+@media (max-width: 768px) {
+    .main-table-content .main-table-data-input,
+    .main-table-content .main-table-data select {
+        max-width: 100%;
+    }
 }

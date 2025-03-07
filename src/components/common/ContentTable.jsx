@@ -34,7 +34,7 @@ export default function ContentTable(props) {
                                     <input readOnly={value?.ReadOnly} onChange={(e)=>(props?.OnValueChange(e))} className="main-table-data-input" type={value?.ValueType} placeholder={value?.TableValuePlaceholder} defaultValue={value?.DefaultValue} min={value?.ValueIntegralMIN} max={value?.ValueIntegralMax} name={value?.BackendName} />
                                 }
                             </td>
-                            <td>{value?.ValueUnit}</td>
+                            <td className="value-unit">{value?.ValueUnit}</td>
                         </tr>
                         }
                         </>
