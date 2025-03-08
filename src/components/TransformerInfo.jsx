@@ -34,7 +34,7 @@ export default function Home() {
         "RATED LV CURRENT": { TableValuePlaceholder: "Rated Current In LV1 Winding", ValueType: "loop-input", DefaultValue: transformerTechnicalInfo?.rated_lv_current, ValueUnit: "AMPS", BackendName: "rated_lv_current", ReadOnly: true },
         "VECTOR GROUP": { TableValuePlaceholder: "Vector Group", ValueType: "text", DefaultValue: transformerTechnicalInfo?.vector_group, BackendName: "vector_group", ReadOnly: true },
         "RATED FREQUENCY": { TableValuePlaceholder: "Rated Frequency", ValueType: "number", DefaultValue: transformerTechnicalInfo?.rated_frequency, ValueUnit: "HZ", BackendName: "rated_frequency", ReadOnly: true },
-        "VOLTAGE VARIATION": { TableValuePlaceholder: "Voltage Variation", ValueType: "text", DefaultValue: transformerTechnicalInfo?.voltage_variation, BackendName: "voltage_variation", ReadOnly: false },
+        "VOLTAGE VARIATION": { TableValuePlaceholder: "Voltage Variation", ValueType: "text", DefaultValue: transformerTechnicalInfo?.voltage_variation, BackendName: "voltage_variation", ReadOnly: true },
     };
 
     const NextPreviousButtonState = [false,false];
