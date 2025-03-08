@@ -15,6 +15,7 @@ export default function Home() {
     const [isSaving, setIsSaving] = useState(false);
     // console.log(params.reportId);
     const [customerData, setCustomerData] = useState();
+    const ReferenceStandardOption = {"Option" : ["IEC 60076", "IEC 60289", "IEC 61378", "IS 2026", "IS 1180", "IS 3156", "ANSI/IEEE C57.12.00", "ANSI/IEEE C57.12.90", "ANSI/IEEE C57.13", "EN 60076", "EN 60289", "EN 61378", "BS 171", "GB/T 6451", "JIS C2101"] }
     // const HomePage = { CellName:[TableValuePlaceholder, ValueType, DefaultValue, ValueUnit] }
     const HomePageContent = {
         // "NAME OF THE CONSUMER" : ["Consumer Name", "text", customerData?.customer_name,], 
@@ -33,7 +34,7 @@ export default function Home() {
         "TRANSFORMER MAKE": { TableValuePlaceholder: "Who make transformer", ValueType: "text", DefaultValue: customerData?.transformer_make, BackendName: "transformer_make" },
         "SERIAL NO": { TableValuePlaceholder: "Serial Number", ValueType: "text", DefaultValue: customerData?.serial_number, BackendName: "serial_number" },
         "RATING": { TableValuePlaceholder: "Transformer Rating", ValueType: "text", DefaultValue: customerData?.rating, ValueUnit: "KVA", BackendName: "rating" },
-        "REFERENCE STANDARD": { TableValuePlaceholder: "Reference Standard", ValueType: "text", DefaultValue: customerData?.reference_standard, BackendName: "reference_standard" },
+        "REFERENCE STANDARD": { TableValuePlaceholder: "Reference Standard", ValueType: "option", DefaultValue: customerData?.reference_standard, BackendName: "reference_standard", OptionValue: ReferenceStandardOption },
         "TESTING DATE": { TableValuePlaceholder: "Testing Date", ValueType: "date", DefaultValue: customerData?.testing_date, BackendName: "testing_date" },
         "REMARK": { TableValuePlaceholder: "Remark", ValueType: "text", DefaultValue: customerData?.remark, BackendName: "remark" },
     };
