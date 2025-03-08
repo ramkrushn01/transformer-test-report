@@ -120,7 +120,7 @@ export default function TransformerBasicInfo() {
             setHomePageContent(
                 (prev)=>({
                     ...prev,
-                    "CAPACITY": { ...prev["CAPACITY"], DefaultValue: RespData.capacity },
+                    "CAPACITY": { ...prev["CAPACITY"], DefaultValue: RespData.capacity, ReadOnly: true },
                     "HV VOLTAGE": { ...prev["HV VOLTAGE"], DefaultValue: RespData.hv_voltage },
                     "LV VOLTAGE": { ...prev["LV VOLTAGE"], DefaultValue: RespData.lv_voltage },
                     "VECTOR GROUP": { ...prev["VECTOR GROUP"], DefaultValue: RespData.vector_group },
