@@ -13,7 +13,16 @@ export default function TransformerBasicInfo() {
     const idRef = useRef();
     const [isSaving, setIsSaving] = useState(false);
     const [transformerBasicInfo, setTransformerBasicInfo] = useState();
-    const VectorGroupOption = {"Option" : ["Dyn11", "Dyn1", "YNd11", "YNd1", "DdO", "YNyno"], "default": "Dyn11"}
+    const VectorGroupDictList = {
+        1 : ["Dd0", "YNyn0", "Dyn1", "YNd1", "Dyn11", "YNd11"],
+        2 : ["Dd0yn0", "Dd0yn11", "Dd0yn1","Dd0yn5", "Dd0yn9", "Dd0yn7", "Dd0yn2"],
+        3 : ["YNyn0d0", "YNyn0d11", "YNyn0d1", "YNyn0d5", "YNyn0d9", "YNyn0d7", "YNyn0d2"],
+        4 : ["Dd0yn0", "Dd0yn11", "Dd0yn1","Dd0yn5", "Dd0yn9", "Dd0yn7", "Dd0yn2"],
+    }
+
+    const NumberOfWinding = {"Option": [1, 2, 3 , 4], "default":1}
+    const [vectorGroupOption, setVectorGroupOption] = useState({"Option": ["Dd0", "YNyn0", "Dyn1", "YNd1", "Dyn11", "YNd11"], "default": 1});
+    const VectorGroupOption = {"Option": VectorGroupDictList[1], "default": VectorGroupDictList[1][0]}
     const PhaseOption = {"Option" : ["Single Phase", "Three Phase"], "default":"Three Phase"}
     const TappingOption = {"Option": ["Yes","No"], "default":"Yes"}
     const TypeOfTappingOption = {"Option": ["OCTC","OLTC"], "default":"OCTC"}
@@ -25,7 +34,7 @@ export default function TransformerBasicInfo() {
         // "CAPACITY" : ["Capacity", "number", "", "KVA", "1","315000"], 
         // "HV VOLTAGE" : ["HV Winding Voltage", "number","","VOLTS", "1"],
         // "LV VOLTAGE" : ["LV Winding Voltage", "number", "" , "VOLTS", "1"],
-        // "VECTOR GROUP" : [VectorGroupOption, "option", "",""],
+        // "VECTOR GROUP" : [vectorGroupOption, "option", "",""],
         // "PHASE" : [PhaseOption, "option", "" ],
         // "No OF LV WINDING" : ["No of LV Windings", "number", "","","1"],
         // "TAPPING" : [TappingOption, "option", "" ], // yes/no
@@ -41,9 +50,9 @@ export default function TransformerBasicInfo() {
         "CAPACITY" : {TableValuePlaceholder: "Capacity", ValueType: "number", DefaultValue: transformerBasicInfo?.capacity, ValueUnit: "KVA", ValueIntegralMIN: "1", ValueIntegralMAX: "315000", BackendName: "capacity"},
         "HV VOLTAGE": { TableValuePlaceholder: "HV Winding Voltage", ValueType: "number", DefaultValue: transformerBasicInfo?.hv_voltage, ValueUnit: "VOLTS", ValueIntegralMIN: "1", BackendName: "hv_voltage" },
         "LV VOLTAGE": { TableValuePlaceholder: "LV Winding Voltage", ValueType: "number", DefaultValue: transformerBasicInfo?.lv_voltage, ValueUnit: "VOLTS", ValueIntegralMIN: "1", BackendName: "lv_voltage" },
-        "VECTOR GROUP": { TableValuePlaceholder: "Vector Group", ValueType: "option", DefaultValue: transformerBasicInfo?.vector_group , OptionValue: VectorGroupOption, BackendName: "vector_group" },
         "PHASE": { TableValuePlaceholder: "Phase", ValueType: "option", DefaultValue: transformerBasicInfo?.phase , OptionValue: PhaseOption, BackendName: "phase" },
-        "No OF LV WINDING": { TableValuePlaceholder: "No of LV Windings", ValueType: "number", DefaultValue: transformerBasicInfo?.no_of_lv_winding, ValueIntegralMIN: "1", BackendName: "no_of_lv_winding" },
+        "No OF LV WINDING": { TableValuePlaceholder: "No of LV Windings", ValueType: "option", DefaultValue: transformerBasicInfo?.no_of_lv_winding, OptionValue: NumberOfWinding, ValueIntegralMIN: "1", BackendName: "no_of_lv_winding" },
+        "VECTOR GROUP": { TableValuePlaceholder: "Vector Group", ValueType: "option", DefaultValue: transformerBasicInfo?.vector_group , OptionValue: VectorGroupOption, BackendName: "vector_group" },
         "TAPPING": { TableValuePlaceholder: "Tapping", ValueType: "option", DefaultValue: transformerBasicInfo?.tapping , OptionValue: TappingOption, BackendName: "tapping" }, // yes/no
         "TYPE OF TAPPING": { TableValuePlaceholder: "Type of Tapping", ValueType: "option", DefaultValue: transformerBasicInfo?.type_of_tapping , OptionValue: TypeOfTappingOption, BackendName: "type_of_tapping" }, // OCTC OLTC
         "TAPPING ON": { TableValuePlaceholder: "Tapping On", ValueType: "option", DefaultValue: transformerBasicInfo?.tapping_on , OptionValue: TappingOnOption, BackendName: "tapping_on" }, // HV LV
@@ -60,6 +69,7 @@ export default function TransformerBasicInfo() {
 
     const [UpdatedValue, setUpdatedValue] = useState({});
     const OnValueChange = (e)=>{
+        console.log(e.target.name);
         if(e.target.name === 'tapping'){
             UpdatedValue[e.target.name] = e.target.value;
 
@@ -86,7 +96,17 @@ export default function TransformerBasicInfo() {
                     ...prev["at %"],
                     ReadOnly: tapping
                 }}))
-        }
+        } 
+        if(e.target.name === 'no_of_lv_winding'){
+            const NoOfWindingVectorGroupList = VectorGroupDictList[e.target.value]
+            setHomePageContent((prev) => ({
+                ...prev,
+                "VECTOR GROUP": {
+                    ...prev["VECTOR GROUP"],
+                    OptionValue: {"Option": NoOfWindingVectorGroupList, "default": NoOfWindingVectorGroupList[0]},
+                },
+            }));
+        }        
 
         setUpdatedValue((prev) => ({
             ...prev,
@@ -94,6 +114,10 @@ export default function TransformerBasicInfo() {
         }));
 
     }
+
+    useEffect(() => {
+        console.log("running....")
+    }, [homePageContent]);
     
     const OnSaveClick = (e)=>{
         if(Object.keys(UpdatedValue).length === 0){
@@ -123,9 +147,9 @@ export default function TransformerBasicInfo() {
                     "CAPACITY": { ...prev["CAPACITY"], DefaultValue: RespData.capacity, ReadOnly: true },
                     "HV VOLTAGE": { ...prev["HV VOLTAGE"], DefaultValue: RespData.hv_voltage },
                     "LV VOLTAGE": { ...prev["LV VOLTAGE"], DefaultValue: RespData.lv_voltage },
-                    "VECTOR GROUP": { ...prev["VECTOR GROUP"], DefaultValue: RespData.vector_group },
                     "PHASE": { ...prev["PHASE"], DefaultValue: RespData.phase },
                     "No OF LV WINDING": { ...prev["No OF LV WINDING"], DefaultValue: RespData.no_of_lv_winding },
+                    "VECTOR GROUP": { ...prev["VECTOR GROUP"], DefaultValue: RespData.vector_group, OptionValue: {"Option": VectorGroupDictList[RespData.no_of_lv_winding], "default": RespData.vector_group} },
                     "TAPPING": { ...prev["TAPPING"], DefaultValue: RespData.tapping },
                     "TYPE OF TAPPING": { ...prev["TYPE OF TAPPING"], DefaultValue: RespData.type_of_tapping, ReadOnly: isTappingReadOnly },
                     "TAPPING ON": { ...prev["TAPPING ON"], DefaultValue: RespData.tapping_on, ReadOnly: isTappingReadOnly },
