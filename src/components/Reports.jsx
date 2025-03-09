@@ -34,7 +34,7 @@ export default function Reports() {
 			"certificate_number": "",
 			"transformer_make": "",
 			"serial_number": "",
-			"rating": "",
+			"rating": 100,
 			"reference_standard": "",
 			"remark": ""
 		}).then((response) => {

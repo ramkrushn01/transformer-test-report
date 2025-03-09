@@ -33,7 +33,7 @@ export default function Home() {
         "CERTIFICATE NO": { TableValuePlaceholder: "Certificate Number", ValueType: "text", DefaultValue: customerData?.certificate_number, BackendName: "certificate_number" },
         "TRANSFORMER MAKE": { TableValuePlaceholder: "Who make transformer", ValueType: "text", DefaultValue: customerData?.transformer_make, BackendName: "transformer_make" },
         "SERIAL NO": { TableValuePlaceholder: "Serial Number", ValueType: "text", DefaultValue: customerData?.serial_number, BackendName: "serial_number" },
-        "RATING": { TableValuePlaceholder: "Transformer Rating", ValueType: "text", DefaultValue: customerData?.rating, ValueUnit: "KVA", BackendName: "rating" },
+        "RATING": { TableValuePlaceholder: "Transformer Rating", ValueType: "number", DefaultValue: customerData?.rating, ValueUnit: "KVA", BackendName: "rating" },
         "REFERENCE STANDARD": { TableValuePlaceholder: "Reference Standard", ValueType: "option", DefaultValue: customerData?.reference_standard, BackendName: "reference_standard", OptionValue: ReferenceStandardOption },
         "TESTING DATE": { TableValuePlaceholder: "Testing Date", ValueType: "date", DefaultValue: customerData?.testing_date, BackendName: "testing_date" },
         "REMARK": { TableValuePlaceholder: "Remark", ValueType: "text", DefaultValue: customerData?.remark, BackendName: "remark" },
