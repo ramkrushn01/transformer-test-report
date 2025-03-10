@@ -1,0 +1,40 @@
+.test-main-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: auto;
+    color: #333;
+}
+
+.test-main-table-body {
+    width: 100%;
+}
+
+.test-main-table-body tr {
+    width: 100%;
+    height: 42px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.test-main-table-body td, .test-main-table-body th{
+    font-weight: 600;
+    text-align: left;
+    padding: 10px 14px;
+}
+
+.main-label {
+    display: block;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.main-input {
+    font-size: 16px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    width: 100%;
+    max-width: 350px;
+    transition: all 0.2s ease-in-out;
+    outline: none;
+}

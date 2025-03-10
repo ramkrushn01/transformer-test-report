@@ -38,7 +38,7 @@ export default function Home() {
     };
 
     const NextPreviousButtonState = [false,false];
-    const NextPrevLink = [`/transformer-basic-info/${params.reportId}`,`/transformer-information/${params.reportId}`]
+    const NextPrevLink = [`/transformer-basic-info/${params.reportId}`,`/measurement-of-insulation-resistance/${params.reportId}`]
 
     let [UpdatedValue, setUpdatedValue] = useState({});
 
