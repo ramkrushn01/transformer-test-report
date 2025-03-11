@@ -25,6 +25,7 @@ export default function MeasurementOfInsulationResistance() {
 
     const OnSaveClick = (e) => {
         if(!isAnyDataChange){
+            toast.info("Info! Nothing to save",{autoClose:1000})
             return
         }
         setIsSaving(true);
