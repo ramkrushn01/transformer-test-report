@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import NextPreviousButton from "./common/NextPreviousButton";
-import { useParams } from "react-router-dom";
+import { useAsyncValue, useParams } from "react-router-dom";
 import "../css/common/test-reports.css";
+import "../css/measurement-of-insulation-resistance.css"
 import { useDispatch } from "react-redux";
 import { setReportId } from "../redux/features/reportIdSlice";
 import API from "../api/custom_axios";
@@ -16,11 +17,11 @@ export default function MeasurementOfInsulationResistance() {
         resistance_unit: "",
         hv_voltage: {value: "", unit: ""},
         lv_voltage: {value: "", unit: ""},
+        report_table : {},
     });
 
 
     const OnSaveClick = (e) => {
-        console.log(updatedValue);
         setIsSaving(true);
         API.patch(`/measurement-of-insulation-resistance/${idRef.current}/`, updatedValue).then((response) => {
             setIsSaving(false);
@@ -41,7 +42,6 @@ export default function MeasurementOfInsulationResistance() {
     const OnVoltageValueChange = (e)=>{
         const BackendName = e.target.name.split('-')[0]
         const key = e.target.name.split('-')[1]
-        console.log(BackendName, key)
         setUpdatedValue((prev) => ({
             ...prev,
             [BackendName]: {
@@ -49,6 +49,29 @@ export default function MeasurementOfInsulationResistance() {
                 [key]: e.target.value // Update the specific key dynamically
             }
         }));
+    }
+
+
+  
+
+    const updateReportTableData = (rowName, columnName, newValue) => {
+        setUpdatedValue(prevData => ({
+            ...prevData,
+            report_table: {
+                ...prevData.report_table,  
+                [rowName]: {
+                    ...prevData.report_table[rowName],
+                    [columnName]: newValue
+                }
+            }
+        }));
+    };
+
+    const OnReportDataChange = (e)=>{
+        const rowName = e.target.dataset.rowName;
+        const columnName = e.target.name;
+        const newValue = e.target.value; 
+        updateReportTableData(rowName, columnName, newValue);
     }
 
     const NextPreviousButtonState = [false, true];
@@ -61,9 +84,10 @@ export default function MeasurementOfInsulationResistance() {
             setUpdatedValue({
                 resistance_unit: response?.data[0]?.resistance_unit,
                 hv_voltage: response?.data[0]?.hv_voltage,
-                lv_voltage: response?.data[0]?.lv_voltage
+                lv_voltage: response?.data[0]?.lv_voltage,
+                report_table: response?.data[0]?.report_table
             })
-            // toast.success(`${JSON.stringify(response.data)}`)
+
         }).catch((err) => {
             toast.error(`Error! ${err}`)
         });
@@ -88,47 +112,118 @@ export default function MeasurementOfInsulationResistance() {
                                 </label>
                             </td>
                             <td>
-                                <select onChange={OnResistanceUnitValueChange}
+                                <select
+                                    onChange={OnResistanceUnitValueChange}
                                     id="resistance-unit"
-                                    className="main-input" value={updatedValue?.resistance_unit} name='resistance_unit'>
+                                    className="main-input"
+                                    value={updatedValue?.resistance_unit}
+                                    name="resistance_unit">
                                     <option value="MΩ">MΩ (Megaohms)</option>
-                                    <option value="GΩ" selected={true} >GΩ (Gigaohms)</option>
+                                    <option value="GΩ" selected={true}>
+                                        GΩ (Gigaohms)
+                                    </option>
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                               <label htmlFor="hv-voltage" className="main-label">HV VOLTAGE: </label> 
+                                <label
+                                    htmlFor="hv-voltage"
+                                    className="main-label">
+                                    HV VOLTAGE:{" "}
+                                </label>
                             </td>
                             <td>
-                               <input id="hv-voltage" type="number" value={updatedValue?.hv_voltage?.value} onChange={OnVoltageValueChange} name='hv_voltage-value' className="main-input" />
+                                <input
+                                    id="hv-voltage"
+                                    type="number"
+                                    value={updatedValue?.hv_voltage?.value}
+                                    onChange={OnVoltageValueChange}
+                                    name="hv_voltage-value"
+                                    className="main-input"
+                                />
                             </td>
                             <td>
-                               <select className="main-input" value={updatedValue?.hv_voltage?.unit} onChange={OnVoltageValueChange} name='hv_voltage-unit' >
-                                <option value="V">V</option>
-                                <option value="KV">KV</option>
-                               </select>
+                                <select
+                                    className="main-input"
+                                    value={updatedValue?.hv_voltage?.unit}
+                                    onChange={OnVoltageValueChange}
+                                    name="hv_voltage-unit">
+                                    <option value="V">V</option>
+                                    <option value="KV">KV</option>
+                                </select>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <label htmlFor="lv-voltage" className="main-label">LV VOLTAGE: </label>
+                                <label
+                                    htmlFor="lv-voltage"
+                                    className="main-label">
+                                    LV VOLTAGE:{" "}
+                                </label>
                             </td>
                             <td>
-                                <input id="lv-voltage" value={updatedValue?.lv_voltage?.value} type="number" className="main-input" onChange={OnVoltageValueChange} name='lv_voltage-value' />
+                                <input
+                                    id="lv-voltage"
+                                    value={updatedValue?.lv_voltage?.value}
+                                    type="number"
+                                    className="main-input"
+                                    onChange={OnVoltageValueChange}
+                                    name="lv_voltage-value"
+                                />
                             </td>
                             <td>
-                               <select  className="main-input" value={updatedValue?.lv_voltage?.unit} onChange={OnVoltageValueChange} name='lv_voltage-unit' >
+                                <select
+                                    className="main-input"
+                                    value={updatedValue?.lv_voltage?.unit}
+                                    onChange={OnVoltageValueChange}
+                                    name="lv_voltage-unit">
                                     <option value="V">V</option>
                                     <option value="KV">KV</option>
-                               </select>
+                                </select>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-                
 
-
+                {/* report_table */}
+                <table className="moir-report-table">
+                    <thead>
+                        <tr className="bg-gray-200">
+                            <th>TIME</th>
+                            {Object.keys(
+                                updatedValue?.report_table?.[
+                                    Object.keys(
+                                        updatedValue?.report_table || {}
+                                    )[0]
+                                ] || {}
+                            ).map((col, index) => (
+                                <th
+                                    key={index}
+                                    className="border p-2 text-left">
+                                    {col}
+                                </th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {Object.entries(updatedValue?.report_table || {}).map(
+                            ([key, value]) => (
+                                <tr>
+                                    <td>{key}</td>
+                                    {Object.entries(value).map(
+                                        ([key_i, value_i]) => (
+                                            <td key={key_i}>
+                                                <input type="number" value={value_i} data-row-name={key} name={key_i} onChange={OnReportDataChange} />
+                                            </td>
+                                        )
+                                    )}
+                                </tr>
+                            )
+                        )}
+                    </tbody>
+                </table>
+                {/* /report_table */}
             </div>
             <NextPreviousButton
                 isSaving={isSaving}
