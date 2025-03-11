@@ -20,12 +20,18 @@ export default function MeasurementOfInsulationResistance() {
         report_table : {},
     });
 
+    const [isAnyDataChange, setIsAnyDataChange] = useState(false);
+
 
     const OnSaveClick = (e) => {
+        if(!isAnyDataChange){
+            return
+        }
         setIsSaving(true);
         API.patch(`/measurement-of-insulation-resistance/${idRef.current}/`, updatedValue).then((response) => {
             setIsSaving(false);
             toast.success("Success! Information updated successfully.");
+            setIsAnyDataChange(false);
         }).catch((err) => {
             setIsSaving(false);
             toast.error(`Error! ${err}`);
@@ -37,6 +43,7 @@ export default function MeasurementOfInsulationResistance() {
             ...prev,
             'resistance_unit' : e.target.value,
         }));
+        setIsAnyDataChange(true);
     }
 
     const OnVoltageValueChange = (e)=>{
@@ -49,6 +56,7 @@ export default function MeasurementOfInsulationResistance() {
                 [key]: e.target.value // Update the specific key dynamically
             }
         }));
+        setIsAnyDataChange(true);
     }
 
 
@@ -72,6 +80,7 @@ export default function MeasurementOfInsulationResistance() {
         const columnName = e.target.name;
         const newValue = e.target.value; 
         updateReportTableData(rowName, columnName, newValue);
+        setIsAnyDataChange(true);
     }
 
     const NextPreviousButtonState = [false, true];
