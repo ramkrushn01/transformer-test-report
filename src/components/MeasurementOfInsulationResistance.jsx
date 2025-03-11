@@ -82,7 +82,7 @@ export default function MeasurementOfInsulationResistance() {
         API.get(`/measurement-of-insulation-resistance/by-customer/${params.reportId}`).then((response) => {
             idRef.current = response?.data[0]?.id;
             setUpdatedValue({
-                resistance_unit: response?.data[0]?.resistance_unit,
+                resistance_unit: response?.data[0]?.resistance_unit || "MΩ",
                 hv_voltage: response?.data[0]?.hv_voltage,
                 lv_voltage: response?.data[0]?.lv_voltage,
                 report_table: response?.data[0]?.report_table
