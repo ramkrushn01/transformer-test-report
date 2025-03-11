@@ -74,7 +74,6 @@
 
 @media (max-width: 768px) {
     .moir-report-table {
-        display: block;
         overflow-x: auto;
         white-space: nowrap;
     }
