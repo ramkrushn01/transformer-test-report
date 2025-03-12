@@ -12,6 +12,7 @@ import Login from "./components/Login";
 import Reports from "./components/Reports";
 import MainHome from "./components/MainHome";
 import MeasurementOfInsulationResistance from "./components/MeasurementOfInsulationResistance";
+import MeasurementOfVoltageRatio from "./components/MeasurementOfVoltageRatio";
 
 // Layout Component for Sidebar & Main Content
 const Layout = ({ children }) => (
@@ -38,6 +39,7 @@ function App() {
         <Route path="/transformer-basic-info/:reportId" element={<Layout><TransformerBasicInfo /></Layout>} />
         <Route path="/customer-details/:reportId" element={<Layout><Home /></Layout>} />
         <Route path="/measurement-of-insulation-resistance/:reportId" element={<Layout><MeasurementOfInsulationResistance /></Layout>} />
+        <Route path="/measurement-of-voltage-ratio/:reportId" element={<Layout><MeasurementOfVoltageRatio /></Layout>} />
       </Routes>
     </BrowserRouter>
   );

@@ -84,8 +84,8 @@ export default function MeasurementOfInsulationResistance() {
         setIsAnyDataChange(true);
     }
 
-    const NextPreviousButtonState = [false, true];
-    const NextPrevLink = [`/transformer-information/${params.reportId}`, `/`];
+    const NextPreviousButtonState = [false, false];
+    const NextPrevLink = [`/transformer-information/${params.reportId}`, `/measurement-of-voltage-ratio/${params.reportId}`];
 
     useEffect(()=>{
         dispatch(setReportId(params.reportId));
@@ -197,7 +197,7 @@ export default function MeasurementOfInsulationResistance() {
                 </table>
 
                 {/* report_table */}
-                <table className="moir-report-table">
+                <table className="report-table">
                     <thead>
                         <tr className="bg-gray-200">
                             <th>TIME</th>

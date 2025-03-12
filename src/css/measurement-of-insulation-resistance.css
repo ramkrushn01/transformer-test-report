@@ -4,7 +4,7 @@
 
 
 /* General Table Styling */
-.moir-report-table {
+.report-table {
     width: 100%;
     border-collapse: collapse;
     font-family: Arial, sans-serif;
@@ -13,12 +13,12 @@
 }
 
 /* Table Header */
-.moir-report-table thead {
+.report-table thead {
     background-color: #f4f4f4;
     font-weight: bold;
 }
 
-.moir-report-table th {
+.report-table th {
     padding: 12px;
     border-bottom: 2px solid #ddd;
     text-align: center;
@@ -26,27 +26,27 @@
 }
 
 /* Table Rows */
-.moir-report-table tbody tr {
+.report-table tbody tr {
     border-bottom: 1px solid #e0e0e0;
 }
 
-.moir-report-table tbody tr:nth-child(even) {
+.report-table tbody tr:nth-child(even) {
     background-color: #fafafa;
 }
 
 /* Table Data Cells */
-.moir-report-table td {
+.report-table td {
     padding: 10px;
     text-align: center;
     border-right: 1px solid #ddd;
 }
 
-.moir-report-table td:last-child {
+.report-table td:last-child {
     border-right: none;
 }
 
 /* Input Fields */
-.moir-report-table input[type="number"] {
+.report-table input[type="number"] {
     width: 90%;
     max-width: 100px;
     padding: 6px;
@@ -59,13 +59,13 @@
 
 /* Responsive Design */
 @media (max-width: 1024px) {
-    .moir-report-table th,
-    .moir-report-table td {
+    .report-table th,
+    .report-table td {
         padding: 8px;
         font-size: 14px;
     }
 
-    .moir-report-table input[type="number"] {
+    .report-table input[type="number"] {
         max-width: 80px;
         font-size: 13px;
         padding: 5px;
@@ -73,18 +73,18 @@
 }
 
 @media (max-width: 768px) {
-    .moir-report-table {
+    .report-table {
         overflow-x: auto;
         white-space: nowrap;
     }
 
-    .moir-report-table th,
-    .moir-report-table td {
+    .report-table th,
+    .report-table td {
         padding: 6px;
         font-size: 12px;
     }
 
-    .moir-report-table input[type="number"] {
+    .report-table input[type="number"] {
         max-width: 60px;
         font-size: 12px;
         padding: 4px;
@@ -92,7 +92,7 @@
 }
 
 @media (max-width: 480px) {
-    .moir-report-table input[type="number"] {
+    .report-table input[type="number"] {
         max-width: 50px;
         font-size: 11px;
         padding: 3px;
