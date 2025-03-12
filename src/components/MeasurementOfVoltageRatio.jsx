@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { setReportId } from "../redux/features/reportIdSlice";
 import { toast, ToastContainer } from "react-toastify";
 import NextPreviousButton from "./common/NextPreviousButton";
+import { nanoid } from "nanoid";
 
 export default function MeasurementOfVoltageRatio() {
     const dispatch = useDispatch();
@@ -72,6 +73,7 @@ export default function MeasurementOfVoltageRatio() {
     useEffect(() => {
         // console.log(Object.keys(voltageRatioReportTableData))
         // console.log(voltageRatioReportTableData['HV-LV1'])
+        console.log(voltageRatioReportTableData)
     }, [voltageRatioReportTableData])
     
     return (
@@ -85,13 +87,13 @@ export default function MeasurementOfVoltageRatio() {
                     ([table_name, table_content]) => (
                         <>
                             <h3>{table_name}</h3>
-                            <table className="report-table">
+                            <table key={nanoid()} className="report-table">
                                 <thead>
                                     <tr>
                                         <th>TAP NO</th>
                                         {
                                             Object.entries(table_content[Object.keys(table_content)[0]]).map(([row_name]) => (
-                                                <th>{row_name}</th>
+                                                <th key={nanoid()}>{row_name}</th>
                                             ))
                                         }
                                     </tr>
@@ -99,7 +101,7 @@ export default function MeasurementOfVoltageRatio() {
                                 <tbody>
                                     {
                                         Object.entries(table_content).map(([key,value])=>(
-                                            <tr>
+                                            <tr key={nanoid()}>
                                                 <td>{key}</td>
                                                 {Object.entries(value).map(
                                                     ([key_i, value_i]) => (
