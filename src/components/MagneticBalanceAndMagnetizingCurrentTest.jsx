@@ -127,6 +127,7 @@ export default function MagneticBalanceAndMagnetizingCurrentTest() {
                                     ))}
                                 </tr>
                             </thead>
+                            <tbody>
                             {Object.entries(table_content).map(
                                 ([key, value]) => (
                                     <tr>
@@ -152,6 +153,7 @@ export default function MagneticBalanceAndMagnetizingCurrentTest() {
                                     </tr>
                                 )
                             )}
+                            </tbody>
                         </table>
                     </>
                 ))}
