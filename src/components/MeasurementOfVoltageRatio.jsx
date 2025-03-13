@@ -14,6 +14,8 @@ export default function MeasurementOfVoltageRatio() {
     const [isSaving, setIsSaving] = useState(false);
     const [voltageRatioReportTableData, setVoltageRatioReportTableData] = useState({});
     const [isAnyDataChange, setIsAnyDataChange] = useState(false);
+    const activeInputRef = useRef(null);
+    
 
     const OnSaveClick = (e)=>{
         if(!isAnyDataChange){
@@ -70,7 +72,7 @@ export default function MeasurementOfVoltageRatio() {
 
 
     useEffect(() => {
-        // console.log(voltageRatioReportTableData)
+        document.getElementById(activeInputRef.current)?.focus();
     }, [voltageRatioReportTableData])
     
     return (
@@ -103,7 +105,7 @@ export default function MeasurementOfVoltageRatio() {
                                                 {Object.entries(value).map(
                                                     ([key_i, value_i]) => (
                                                         <td key={key_i} title={`${key} ${key_i}`}>
-                                                            <input type="number" value={value_i} data-row-name={key} data-table-name={table_name} name={key_i} onChange={OnReportDataChange}  />
+                                                            <input id={`${table_name}_${key}_${key_i}`} onFocus={(e)=>{activeInputRef.current=e.target.id}} type="number" value={value_i} data-row-name={key} data-table-name={table_name} name={key_i} onChange={OnReportDataChange}  />
                                                         </td>
                                                     )
                                                 )}
