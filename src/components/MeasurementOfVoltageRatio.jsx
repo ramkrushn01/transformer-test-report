@@ -18,6 +18,7 @@ export default function MeasurementOfVoltageRatio() {
     const OnSaveClick = (e)=>{
         if(!isAnyDataChange){
             toast.info("Info! Nothing to save", {autoClose: 1000});
+            return
         }
         setIsSaving(true);
         API.patch(`/measurement-of-voltage-ratio/${idRef.current}/`, {'voltage_ratio_table':voltageRatioReportTableData}).then((response) => {
@@ -52,18 +53,16 @@ export default function MeasurementOfVoltageRatio() {
         const newValue = e.target.value;
 
         updateReportTableData(tableName, rowName, columnName, newValue);
-        // console.log(tableName, columnName, rowName, newValue);
     }
 
 
-    const NextPreviousButtonState = [false, true];
+    const NextPreviousButtonState = [false, false];
     const NextPrevLink = [`/measurement-of-insulation-resistance/${params.reportId}`, `/magnetic-balance-and-magnetizing-current-test/${params.reportId}`]
     useEffect(() => {
         dispatch(setReportId(params.reportId));
         API.get(`/measurement-of-voltage-ratio/by-customer/${params.reportId}`).then((response) => {
                 idRef.current = response?.data[0]?.id;
                 setVoltageRatioReportTableData(response?.data[0]?.voltage_ratio_table);
-                // console.log(response?.data[0]);
             }).catch((err) => {
 
             });
@@ -71,9 +70,7 @@ export default function MeasurementOfVoltageRatio() {
 
 
     useEffect(() => {
-        // console.log(Object.keys(voltageRatioReportTableData))
-        // console.log(voltageRatioReportTableData['HV-LV1'])
-        console.log(voltageRatioReportTableData)
+        // console.log(voltageRatioReportTableData)
     }, [voltageRatioReportTableData])
     
     return (
@@ -86,7 +83,7 @@ export default function MeasurementOfVoltageRatio() {
                 {Object.entries(voltageRatioReportTableData).map(
                     ([table_name, table_content]) => (
                         <>
-                            <h3>{table_name}</h3>
+                            <h3 className="table-name">{table_name}</h3>
                             <table key={nanoid()} className="report-table">
                                 <thead>
                                     <tr>
