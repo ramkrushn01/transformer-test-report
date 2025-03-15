@@ -88,24 +88,30 @@ export default function MagneticBalanceAndMagnetizingCurrentTest() {
                 <table className="report-table">
                     <thead>
                         <tr>
-                            {Object.keys(hvSide).map((key) => (
+                            {Object.keys(
+                                hvSide?.[Object.keys(hvSide || {})[0]] || {}
+                            )?.map((key) => (
                                 <th key={nanoid()}>{key}</th>
                             ))}
                         </tr>
                     </thead>
                     <tbody>
-                        {Object.entries(hvSide).map(([key, value], index_i) => (
+                        {Object.entries(hvSide).map(([key, value]) => (
                             <tr key={nanoid()}>
                                 {Object.entries(value).map(
-                                    ([key_i, value_i], index_j) => (
-                                        <td key={nanoid()}>
-                                            <input id={`${key}_${key_i}_${index_i}_${index_j}`}
+                                    ([key_i, value_i]) => (
+                                        <td>
+                                            <input
+                                                id={`${key}_${key_i}`}
+                                                onFocus={(e) => {
+                                                    activeInputRef.current =
+                                                        e.target.id;
+                                                }}
                                                 type="number"
                                                 value={value_i}
                                                 data-row-name={key_i}
                                                 name={key}
                                                 onChange={OnHVSideChange}
-                                                onFocus={(e)=>{activeInputRef.current=e.target.id}}
                                             />
                                         </td>
                                     )
@@ -118,41 +124,50 @@ export default function MagneticBalanceAndMagnetizingCurrentTest() {
             <div className="head-info">
                 {Object.entries(lvSide).map(([table_name, table_content]) => (
                     <>
-                        <h3 className="table-name" key={nanoid()}>FROM {table_name} SIDE</h3>
+                        <h3 className="table-name" key={nanoid()}>
+                            FROM {table_name} SIDE
+                        </h3>
                         <table className="report-table" key={nanoid()}>
                             <thead>
                                 <tr>
-                                    {Object.keys(table_content).map((key) => (
+                                    {Object.keys(table_content?.[Object.keys(table_content)[0]] || {}).map((key) => (
                                         <th>{key}</th>
                                     ))}
                                 </tr>
                             </thead>
                             <tbody>
-                            {Object.entries(table_content).map(
-                                ([key, value]) => (
-                                    <tr>
-                                        {Object.entries(value).map(
-                                            ([key_i, value_i]) => (
-                                                <td>
-                                                    <input
-                                                        type="number"
-                                                        id={`${table_name}_${key}_${key_i}`}
-                                                        title={`${key} ${key_i}`}
-                                                        value={value_i}
-                                                        data-row-name={key_i}
-                                                        name={key}
-                                                        data-table-name={
-                                                            table_name
-                                                        }
-                                                        onChange={OnLVSideChange}
-                                                        onFocus={(e)=>{activeInputRef.current=e.target.id}}
-                                                    />
-                                                </td>
-                                            )
-                                        )}
-                                    </tr>
-                                )
-                            )}
+                                {Object.entries(table_content).map(
+                                    ([key, value]) => (
+                                        <tr>
+                                            {Object.entries(value).map(
+                                                ([key_i, value_i]) => (
+                                                    <td>
+                                                        <input
+                                                            type="number"
+                                                            id={`${table_name}_${key}_${key_i}`}
+                                                            title={`${key} ${key_i}`}
+                                                            value={value_i}
+                                                            data-row-name={
+                                                                key_i
+                                                            }
+                                                            name={key}
+                                                            data-table-name={
+                                                                table_name
+                                                            }
+                                                            onChange={
+                                                                OnLVSideChange
+                                                            }
+                                                            onFocus={(e) => {
+                                                                activeInputRef.current =
+                                                                    e.target.id;
+                                                            }}
+                                                        />
+                                                    </td>
+                                                )
+                                            )}
+                                        </tr>
+                                    )
+                                )}
                             </tbody>
                         </table>
                     </>
