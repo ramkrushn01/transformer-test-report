@@ -106,6 +106,7 @@ export default function TransformerBasicInfo() {
                     OptionValue: {"Option": NoOfWindingVectorGroupList, "default": NoOfWindingVectorGroupList[0]},
                 },
             }));
+            UpdatedValue['vector_group'] = NoOfWindingVectorGroupList[0];
         }        
 
         setUpdatedValue((prev) => ({
