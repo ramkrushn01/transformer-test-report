@@ -105,7 +105,11 @@ export default function MeasurementOfVoltageRatio() {
                                                 {Object.entries(value).map(
                                                     ([key_i, value_i]) => (
                                                         <td key={key_i} title={`${key} ${key_i}`}>
-                                                            <input id={`${table_name}_${key}_${key_i}`} onFocus={(e)=>{activeInputRef.current=e.target.id}} type="number" value={value_i} data-row-name={key} data-table-name={table_name} name={key_i} onChange={OnReportDataChange}  />
+                                                            {
+                                                                key_i.toLowerCase() === 'standard ratio' ? 
+                                                                value_i :
+                                                                <input id={`${table_name}_${key}_${key_i}`} onFocus={(e)=>{activeInputRef.current=e.target.id}} type="number" value={value_i} data-row-name={key} data-table-name={table_name} name={key_i} onChange={OnReportDataChange}  />
+                                                            }
                                                         </td>
                                                     )
                                                 )}
