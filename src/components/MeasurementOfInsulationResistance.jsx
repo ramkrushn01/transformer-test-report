@@ -184,7 +184,7 @@ export default function MeasurementOfInsulationResistance() {
                                 <label
                                     htmlFor="hv-voltage"
                                     className="main-label">
-                                    HV VOLTAGE:{" "}
+                                    HV TEST VOLTAGE (DC):{" "}
                                 </label>
                             </td>
                             <td>
@@ -213,7 +213,7 @@ export default function MeasurementOfInsulationResistance() {
                                 <label
                                     htmlFor="lv-voltage"
                                     className="main-label">
-                                    LV VOLTAGE:{" "}
+                                    LV TEST VOLTAGE (DC):{" "}
                                 </label>
                             </td>
                             <td>
