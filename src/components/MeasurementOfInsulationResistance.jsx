@@ -15,6 +15,7 @@ export default function MeasurementOfInsulationResistance() {
     const params = useParams();
     const [updatedValue, setUpdatedValue] = useState({
         resistance_unit: "",
+        top_oil_temp: "",
         hv_voltage: {value: "", unit: ""},
         lv_voltage: {value: "", unit: ""},
         report_table : {},
@@ -47,6 +48,14 @@ export default function MeasurementOfInsulationResistance() {
         setIsAnyDataChange(true);
     }
 
+    const OnTopOilTempValueChange = (e)=>{
+        setUpdatedValue((prev)=>({
+            ...prev,
+            'top_oil_temp' : e.target.value,
+        }));
+        setIsAnyDataChange(true);
+    }
+
     const OnVoltageValueChange = (e)=>{
         const BackendName = e.target.name.split('-')[0]
         const key = e.target.name.split('-')[1]
@@ -75,12 +84,25 @@ export default function MeasurementOfInsulationResistance() {
             }
         }));
     };
+    
+    const calculateAndSetPIValue = (rowName, columnName, newValue)=>{
+        if(rowName === '60 SEC'){
+            const Sec600Value = updatedValue['report_table']['600 SEC'][columnName]
+            const PIValue = (Sec600Value / newValue).toFixed(4);
+            updateReportTableData('PI', columnName, PIValue);
+        } else if(rowName === '600 SEC'){
+            const Sec60Value = updatedValue['report_table']['60 SEC'][columnName]
+            const PIValue = (newValue / Sec60Value).toFixed(4);
+            updateReportTableData('PI', columnName, PIValue);
+        }
+    }
 
     const OnReportDataChange = (e)=>{
         const rowName = e.target.dataset.rowName;
         const columnName = e.target.name;
         const newValue = e.target.value; 
         updateReportTableData(rowName, columnName, newValue);
+        calculateAndSetPIValue(rowName, columnName, newValue);
         setIsAnyDataChange(true);
     }
 
@@ -93,6 +115,7 @@ export default function MeasurementOfInsulationResistance() {
             idRef.current = response?.data[0]?.id;
             setUpdatedValue({
                 resistance_unit: response?.data[0]?.resistance_unit || "MΩ",
+                top_oil_temp: response?.data[0]?.top_oil_temp,
                 hv_voltage: response?.data[0]?.hv_voltage,
                 lv_voltage: response?.data[0]?.lv_voltage,
                 report_table: response?.data[0]?.report_table
@@ -135,6 +158,27 @@ export default function MeasurementOfInsulationResistance() {
                                 </select>
                             </td>
                         </tr>
+                        {/*  */}
+                        <tr>
+                            <td>
+                                <label
+                                    htmlFor="hv-voltage"
+                                    className="main-label">
+                                    TOP OIL TEMP (°C):{" "}
+                                </label>
+                            </td>
+                            <td>
+                                <input
+                                    id="hv-voltage"
+                                    type="number"
+                                    value={updatedValue?.top_oil_temp}
+                                    onChange={OnTopOilTempValueChange}
+                                    name="top_oil_temp"
+                                    className="main-input"
+                                />
+                            </td>
+                        </tr>
+                        {/*  */}
                         <tr>
                             <td>
                                 <label
@@ -224,7 +268,12 @@ export default function MeasurementOfInsulationResistance() {
                                     {Object.entries(value).map(
                                         ([key_i, value_i]) => (
                                             <td key={key_i}>
-                                                <input type="number" value={value_i} data-row-name={key} name={key_i} onChange={OnReportDataChange} />
+                                                {
+                                                    key === "PI" ?
+                                                    value_i 
+                                                    :
+                                                    <input type="number" value={value_i} data-row-name={key} name={key_i} onChange={OnReportDataChange} />
+                                                }
                                             </td>
                                         )
                                     )}
