@@ -52,7 +52,6 @@ export default function MagneticBalanceAndMagnetizingCurrentTest() {
       const NewValue = e.target.value;
       const NewLVSide = {...lvSide};
       NewLVSide[TableName][ColumnName][RowName] = NewValue;
-      console.log(NewLVSide);
       setLVSide(NewLVSide);
       setIsAnyDataChange(true);
     }
@@ -74,7 +73,7 @@ export default function MagneticBalanceAndMagnetizingCurrentTest() {
     }, [hvSide, lvSide])
     
 
-    const NextPreviousButtonState = [false, true];
+    const NextPreviousButtonState = [false, false];
     const NextPrevLink = [`/measurement-of-voltage-ratio/${params.reportId}`, `/measurement-of-winding-resistance/${params.reportId}`]
 
     return (

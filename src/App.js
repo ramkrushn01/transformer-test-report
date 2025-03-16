@@ -14,6 +14,7 @@ import MainHome from "./components/MainHome";
 import MeasurementOfInsulationResistance from "./components/MeasurementOfInsulationResistance";
 import MeasurementOfVoltageRatio from "./components/MeasurementOfVoltageRatio";
 import MagneticBalanceAndMagnetizingCurrentTest from "./components/MagneticBalanceAndMagnetizingCurrentTest";
+import MeasurementOfWindingResistance from "./components/MeasurementOfWindingResistance";
 
 // Layout Component for Sidebar & Main Content
 const Layout = ({ children }) => (
@@ -42,6 +43,7 @@ function App() {
         <Route path="/measurement-of-insulation-resistance/:reportId" element={<Layout><MeasurementOfInsulationResistance /></Layout>} />
         <Route path="/measurement-of-voltage-ratio/:reportId" element={<Layout><MeasurementOfVoltageRatio /></Layout>} />
         <Route path="/magnetic-balance-and-magnetizing-current-test/:reportId" element={<Layout><MagneticBalanceAndMagnetizingCurrentTest /></Layout>} />
+        <Route path="/measurement-of-winding-resistance/:reportId" element={<Layout><MeasurementOfWindingResistance /></Layout>} />
       </Routes>
     </BrowserRouter>
   );
