@@ -21,6 +21,7 @@ export default function MeasurementOfWindingResistance() {
         useState();
     const [primaryWindingTable, setPrimaryWindingTable] = useState({});
     const [secondaryWindingTable, setSecondaryWindingTable] = useState({});
+    const KConstant = useRef();
 
     const OnSaveClick = (e) => {
         if (!isAnyDataChange) {
@@ -66,8 +67,25 @@ export default function MeasurementOfWindingResistance() {
         const RowName = e.target.dataset.rowName;
         const NewValue = e.target.value;
 
-        const NewPrimaryWindingTable = {...primaryWindingTable};
+        const NewPrimaryWindingTable = { ...primaryWindingTable };
         NewPrimaryWindingTable[ColumnName][RowName] = NewValue;
+
+        const CalculatedRavgValue =
+            ((parseInt(NewPrimaryWindingTable[ColumnName][
+                `${Object.keys(NewPrimaryWindingTable[ColumnName])[0]}`
+            ]) + parseInt(
+            NewPrimaryWindingTable[ColumnName][
+                `${Object.keys(NewPrimaryWindingTable[ColumnName])[1]}`
+            ]) + parseInt(
+            NewPrimaryWindingTable[ColumnName][
+                `${Object.keys(NewPrimaryWindingTable[ColumnName])[2]}`
+            ]))/3
+        ).toFixed(4);
+
+        const CalculatedAvgResistanceAt75degSent = (((KConstant.current + 75) / (KConstant.current + averageOilTemperature)) * CalculatedRavgValue).toFixed(4);
+
+        NewPrimaryWindingTable[ColumnName]['Ravg'] = CalculatedRavgValue;
+        NewPrimaryWindingTable[ColumnName]['Avg. Resistance at 75°C'] = CalculatedAvgResistanceAt75degSent;
         setPrimaryWindingTable(NewPrimaryWindingTable);
         setIsAnyDataChange(true);
     };
@@ -78,8 +96,27 @@ export default function MeasurementOfWindingResistance() {
         const RowName = e.target.dataset.rowName;
         const NewValue = e.target.value;
 
-        const NewSecondaryWindingTable = {...secondaryWindingTable}
+        const NewSecondaryWindingTable = { ...secondaryWindingTable };
         NewSecondaryWindingTable[TableName][ColumnName][RowName] = NewValue;
+
+        const CalculatedRavgValue =
+            ((parseInt(NewSecondaryWindingTable[TableName][ColumnName][
+                `${Object.keys(NewSecondaryWindingTable[TableName][ColumnName])[0]}`
+            ]) + parseInt(
+                NewSecondaryWindingTable[TableName][ColumnName][
+                `${Object.keys(NewSecondaryWindingTable[TableName][ColumnName])[1]}`
+            ]) + parseInt(
+                NewSecondaryWindingTable[TableName][ColumnName][
+                `${Object.keys(NewSecondaryWindingTable[TableName][ColumnName])[2]}`
+            ]))/3
+        ).toFixed(4);
+
+        const CalculatedAvgResistanceAt75degSent = (((KConstant.current + 75) / (KConstant.current + averageOilTemperature)) * CalculatedRavgValue).toFixed(4);
+
+
+        NewSecondaryWindingTable[TableName][ColumnName]['Ravg'] = CalculatedRavgValue;
+        NewSecondaryWindingTable[TableName][ColumnName]['Avg. Resistance at 75°C'] = CalculatedAvgResistanceAt75degSent;
+        
         setSecondaryWindingTable(NewSecondaryWindingTable);
         setIsAnyDataChange(true);
     };
@@ -101,6 +138,10 @@ export default function MeasurementOfWindingResistance() {
                 );
                 setPrimaryWindingTable(resp_data.primary_winding_table);
                 setSecondaryWindingTable(resp_data.secondary_winding_table);
+                KConstant.current =
+                    resp_data.conductor_material.toLowerCase() === "copper"
+                        ? 235
+                        : 225;
             })
             .catch((err) => {});
     }, []);
@@ -209,20 +250,24 @@ export default function MeasurementOfWindingResistance() {
                                     {Object.entries(value).map(
                                         ([key_i, value_i], index) => (
                                             <td key={nanoid()}>
-                                                <input
-                                                    id={`${key}_${key_i}`}
-                                                    onFocus={(e) => {
-                                                        activeInputRef.current =
-                                                            e.target.id;
-                                                    }}
-                                                    type="number"
-                                                    value={value_i}
-                                                    data-row-name={key_i}
-                                                    name={key}
-                                                    onChange={
-                                                        OnPrimaryWindingTableChange
-                                                    }
-                                                />
+                                                {
+                                                    (key_i.toLowerCase() === 'ravg' || key_i.toLowerCase() === 'avg. resistance at 75°c' ) ? value_i
+                                                    : 
+                                                        <input
+                                                            id={`${key}_${key_i}`}
+                                                            onFocus={(e) => {
+                                                                activeInputRef.current =
+                                                                    e.target.id;
+                                                            }}
+                                                            type="number"
+                                                            value={value_i}
+                                                            data-row-name={key_i}
+                                                            name={key}
+                                                            onChange={
+                                                                OnPrimaryWindingTableChange
+                                                            }
+                                                        />
+                                                }
                                             </td>
                                         )
                                     )}
@@ -261,28 +306,32 @@ export default function MeasurementOfWindingResistance() {
                                                         index
                                                     ) => (
                                                         <td>
-                                                            <input
-                                                                type="number"
-                                                                id={`${table_name}_${key}_${key_i}`}
-                                                                title={`${key} ${key_i}`}
-                                                                value={value_i}
-                                                                data-row-name={
-                                                                    key_i
-                                                                }
-                                                                name={key}
-                                                                data-table-name={
-                                                                    table_name
-                                                                }
-                                                                onChange={
-                                                                    OnSecondaryWindingTableChange
-                                                                }
-                                                                onFocus={(
-                                                                    e
-                                                                ) => {
-                                                                    activeInputRef.current =
-                                                                        e.target.id;
-                                                                }}
-                                                            />
+                                                            {
+                                                                (key_i.toLowerCase() === 'ravg' || key_i.toLowerCase() === 'avg. resistance at 75°c' ) ?
+                                                                 value_i : 
+                                                                <input
+                                                                    type="number"
+                                                                    id={`${table_name}_${key}_${key_i}`}
+                                                                    title={`${key} ${key_i}`}
+                                                                    value={value_i}
+                                                                    data-row-name={
+                                                                        key_i
+                                                                    }
+                                                                    name={key}
+                                                                    data-table-name={
+                                                                        table_name
+                                                                    }
+                                                                    onChange={
+                                                                        OnSecondaryWindingTableChange
+                                                                    }
+                                                                    onFocus={(
+                                                                        e
+                                                                    ) => {
+                                                                        activeInputRef.current =
+                                                                            e.target.id;
+                                                                    }}
+                                                                />
+                                                            }
                                                         </td>
                                                     )
                                                 )}
