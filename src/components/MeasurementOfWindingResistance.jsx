@@ -60,6 +60,26 @@ export default function MeasurementOfWindingResistance() {
     const OnAverageOilTemperatureChange = (e) => {
         setIsAnyDataChange(true);
         setAverageOilTemperature(e.target.value);
+
+        Object.entries(primaryWindingTable)?.map(([key,value],index)=>{
+            const K_Const = KConstant.current;
+            const AverageOilTemperature = parseFloat(e.target.value);
+            const RAvg = parseFloat(value['Ravg']);
+            const CalculatedAvgResistanceAt75degSent = (((K_Const + 75) / (K_Const + AverageOilTemperature)) * RAvg).toFixed(4);  
+            value["Avg. Resistance at 75°C"] = CalculatedAvgResistanceAt75degSent; 
+        });
+
+        Object.entries(secondaryWindingTable).map(([table_name, table_content], index)=>{
+            Object.entries(table_content)?.map(([key_i,value_i],index)=>{
+                const K_Const = KConstant.current;
+                const AverageOilTemperature = parseFloat(e.target.value);
+                const RAvg = parseFloat(value_i['Ravg']);
+                const CalculatedAvgResistanceAt75degSent = (((K_Const + 75) / (K_Const + AverageOilTemperature)) * RAvg).toFixed(4);  
+                secondaryWindingTable[table_name][key_i]["Avg. Resistance at 75°C"] = CalculatedAvgResistanceAt75degSent; 
+            });
+        });
+
+        setPrimaryWindingTable(primaryWindingTable);
     };
 
     const OnPrimaryWindingTableChange = (e) => {
@@ -71,12 +91,12 @@ export default function MeasurementOfWindingResistance() {
         NewPrimaryWindingTable[ColumnName][RowName] = NewValue;
 
         const CalculatedRavgValue =
-            ((parseInt(NewPrimaryWindingTable[ColumnName][
+            ((parseFloat(NewPrimaryWindingTable[ColumnName][
                 `${Object.keys(NewPrimaryWindingTable[ColumnName])[0]}`
-            ]) + parseInt(
+            ]) + parseFloat(
             NewPrimaryWindingTable[ColumnName][
                 `${Object.keys(NewPrimaryWindingTable[ColumnName])[1]}`
-            ]) + parseInt(
+            ]) + parseFloat(
             NewPrimaryWindingTable[ColumnName][
                 `${Object.keys(NewPrimaryWindingTable[ColumnName])[2]}`
             ]))/3
@@ -100,12 +120,12 @@ export default function MeasurementOfWindingResistance() {
         NewSecondaryWindingTable[TableName][ColumnName][RowName] = NewValue;
 
         const CalculatedRavgValue =
-            ((parseInt(NewSecondaryWindingTable[TableName][ColumnName][
+            ((parseFloat(NewSecondaryWindingTable[TableName][ColumnName][
                 `${Object.keys(NewSecondaryWindingTable[TableName][ColumnName])[0]}`
-            ]) + parseInt(
+            ]) + parseFloat(
                 NewSecondaryWindingTable[TableName][ColumnName][
                 `${Object.keys(NewSecondaryWindingTable[TableName][ColumnName])[1]}`
-            ]) + parseInt(
+            ]) + parseFloat(
                 NewSecondaryWindingTable[TableName][ColumnName][
                 `${Object.keys(NewSecondaryWindingTable[TableName][ColumnName])[2]}`
             ]))/3
