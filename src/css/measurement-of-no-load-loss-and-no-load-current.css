@@ -1,0 +1,12 @@
+.no-load-loss-no-load-current {
+    width: fit-content;
+    margin-inline: auto;
+
+}
+
+.no-load-loss-no-load-current tbody td {
+}
+
+.no-load-loss-no-load-current tbody .consider-d-r{
+    /* width: 10px; */
+}
