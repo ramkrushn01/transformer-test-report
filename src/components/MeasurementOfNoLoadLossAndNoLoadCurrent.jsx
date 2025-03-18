@@ -40,6 +40,15 @@ export default function MeasurementOfNoLoadLossAndNoLoadCurrent() {
     const [excitationAt90PercentageTable, setExcitationAt90PercentageTable] =
         useState(excitation_at__percentage_table);
 
+    const [excitationAt100PercentageTable, setExcitationAt100PercentageTable] =
+        useState(excitation_at__percentage_table);
+    const [excitationAt110PercentageTable, setExcitationAt110PercentageTable] =
+        useState(excitation_at__percentage_table);
+
+    const [noLoadLoss90Per, setNoLoadLoss90Per] = useState(NaN);
+    const [noLoadLoss100Per, setNoLoadLoss100Per] = useState(NaN);
+    const [noLoadLoss110Per, setNoLoadLoss110Per] = useState(NaN);
+
     const OnTransformerEnergizedFromChange = (e) => {
         setIsAnyDataChange(true);
         setTransformerEnergizedFrom((prev) => ({
@@ -101,7 +110,15 @@ export default function MeasurementOfNoLoadLossAndNoLoadCurrent() {
                     ...excitationAt90PercentageTable,
                 };
                 break;
-
+            case "excitation_at_100_percentage_table":
+                UpdatedExcitationAt__PercentageTable = {
+                    ...excitationAt100PercentageTable,
+                };
+            case "excitation_at_110_percentage_table":
+                UpdatedExcitationAt__PercentageTable = {
+                    ...excitationAt110PercentageTable,
+                };
+                break;
             default:
                 break;
         }
@@ -142,13 +159,37 @@ export default function MeasurementOfNoLoadLossAndNoLoadCurrent() {
                         ]
                     ) + parseFloat(CalculatedAvg);
             }
+            CalculatedAvg = parseFloat(CalculatedAvg.toFixed(4));
             UpdatedExcitationAt__PercentageTable[ColumnName]["SUM"] =
-                CalculatedAvg.toFixed(4);
+                CalculatedAvg;
+            switch (TableName) {
+                case "excitation_at_90_percentage_table":
+                    setNoLoadLoss90Per((CalculatedAvg * mf) / 1000);
+                    break;
+                case "excitation_at_100_percentage_table":
+                    setNoLoadLoss100Per((CalculatedAvg * mf) / 1000);
+                    break;
+                case "excitation_at_110_percentage_table":
+                    setNoLoadLoss110Per((CalculatedAvg * mf) / 1000);
+                    break;
+                default:
+                    break;
+            }
         }
 
         switch (TableName) {
             case "excitation_at_90_percentage_table":
                 setExcitationAt90PercentageTable(
+                    UpdatedExcitationAt__PercentageTable
+                );
+                break;
+            case "excitation_at_100_percentage_table":
+                setExcitationAt100PercentageTable(
+                    UpdatedExcitationAt__PercentageTable
+                );
+                break;
+            case "excitation_at_110_percentage_table":
+                setExcitationAt110PercentageTable(
                     UpdatedExcitationAt__PercentageTable
                 );
                 break;
@@ -175,6 +216,13 @@ export default function MeasurementOfNoLoadLossAndNoLoadCurrent() {
                 no_load_current_percentage: noLoadCurrentPercentage,
                 excitation_at_90_percentage_table:
                     excitationAt90PercentageTable,
+                excitation_at_100_percentage_table:
+                    excitationAt100PercentageTable,
+                excitation_at_110_percentage_table:
+                    excitationAt110PercentageTable,
+                no_load_loss_at_90_percentage_excitation: noLoadLoss90Per,
+                no_load_loss_at_100_percentage_excitation: noLoadLoss100Per,
+                no_load_loss_at_110_percentage_excitation: noLoadLoss110Per,
             }
         )
             .then((response) => {
@@ -210,6 +258,21 @@ export default function MeasurementOfNoLoadLossAndNoLoadCurrent() {
                 setExcitationAt90PercentageTable(
                     resp_data?.excitation_at_90_percentage_table
                 );
+                setExcitationAt100PercentageTable(
+                    resp_data?.excitation_at_100_percentage_table
+                );
+                setExcitationAt110PercentageTable(
+                    resp_data?.excitation_at_110_percentage_table
+                );
+                setNoLoadLoss90Per(
+                    resp_data?.no_load_loss_at_90_percentage_excitation
+                );
+                setNoLoadLoss100Per(
+                    resp_data?.no_load_loss_at_100_percentage_excitation
+                );
+                setNoLoadLoss110Per(
+                    resp_data?.no_load_loss_at_110_percentage_excitation
+                );
             })
             .catch((err) => {});
     }, []);
@@ -222,7 +285,11 @@ export default function MeasurementOfNoLoadLossAndNoLoadCurrent() {
 
     useEffect(() => {
         document.getElementById(activeInputRef.current)?.focus();
-    }, [excitationAt90PercentageTable]);
+    }, [
+        excitationAt90PercentageTable,
+        excitationAt100PercentageTable,
+        excitationAt110PercentageTable,
+    ]);
 
     const RenderExcitationTable = ({
         excitation_at__percentage_table,
@@ -257,11 +324,12 @@ export default function MeasurementOfNoLoadLossAndNoLoadCurrent() {
                                                         {key_i === "Avg" ||
                                                         key_i === "V Applied" ||
                                                         key_i === "SUM" ||
-														key_i === "I(N.L)" ? (
+                                                        key_i === "I(N.L)" ? (
                                                             value_i
                                                         ) : (
                                                             <input
                                                                 id={`${table_name}_${key}_${key_i}`}
+																title={`${table_name}_${key}_${key_i}`}
                                                                 value={value_i}
                                                                 onChange={
                                                                     OnExcitation__PercentageTableChange
@@ -294,6 +362,25 @@ export default function MeasurementOfNoLoadLossAndNoLoadCurrent() {
                 </tbody>
             </table>
         </>
+    );
+
+    const RenderNoLoadLoss = ({ table_name, percentage, value }) => (
+        <table
+            className="test-main-table"
+            style={{ width: "fit-content", margin: "0px" }}>
+            <tbody className="test-main-table-body">
+                <tr>
+                    <td>
+                        <label
+                            className="main-label"
+                            htmlFor="trans-energized-from">
+                            NO LOAD LOSS {percentage}% EXCITATION:
+                        </label>
+                    </td>
+                    <td>{value}</td>
+                </tr>
+            </tbody>
+        </table>
     );
 
     return (
@@ -475,7 +562,41 @@ export default function MeasurementOfNoLoadLossAndNoLoadCurrent() {
                     }
                     table_name="excitation_at_90_percentage_table"
                 />
+                <RenderNoLoadLoss
+                    table_name="excitation_at_90_percentage_table"
+                    percentage={90}
+                    value={noLoadLoss90Per}
+                />
+                <hr />
+
+                <h3 className="table-name">100% Excitation</h3>
+                <RenderExcitationTable
+                    excitation_at__percentage_table={
+                        excitationAt100PercentageTable
+                    }
+                    table_name="excitation_at_100_percentage_table"
+                />
+                <RenderNoLoadLoss
+                    table_name="excitation_at_100_percentage_table"
+                    percentage={100}
+                    value={noLoadLoss100Per}
+                />
+                <hr />
+
+                <h3 className="table-name">110% Excitation</h3>
+                <RenderExcitationTable
+                    excitation_at__percentage_table={
+                        excitationAt110PercentageTable
+                    }
+                    table_name="excitation_at_110_percentage_table"
+                />
+                <RenderNoLoadLoss
+                    table_name="excitation_at_110_percentage_table"
+                    percentage={110}
+                    value={noLoadLoss110Per}
+                />
             </div>
+
             <NextPreviousButton
                 isSaving={isSaving}
                 OnSaveClick={OnSaveClick}
