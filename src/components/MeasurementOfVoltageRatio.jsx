@@ -134,6 +134,7 @@ export default function MeasurementOfVoltageRatio() {
                                     }
                                 </tbody>
                             </table>
+                        <hr style={{ marginBlock: "20px" }} />
                         </>
                     )
                 )}

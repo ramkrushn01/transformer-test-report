@@ -123,6 +123,7 @@ export default function MagneticBalanceAndMagnetizingCurrentTest() {
             <div className="head-info">
                 {Object.entries(lvSide).map(([table_name, table_content]) => (
                     <>
+                        <hr style={{ marginBlock: "20px" }} />
                         <h3 className="table-name" key={nanoid()}>
                             FROM {table_name} SIDE
                         </h3>
@@ -170,6 +171,7 @@ export default function MagneticBalanceAndMagnetizingCurrentTest() {
                             </tbody>
                         </table>
                     </>
+
                 ))}
             </div>
 

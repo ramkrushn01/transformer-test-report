@@ -248,6 +248,7 @@ export default function MeasurementOfWindingResistance() {
                 </table>
 
                 {/* report table */}
+                <hr style={{ marginBlock: "20px" }} />
                 <h3 className="table-name">Primary Winding</h3>
                 <table className="report-table">
                     <thead>
@@ -296,10 +297,14 @@ export default function MeasurementOfWindingResistance() {
                         )}
                     </tbody>
                 </table>
+                <hr style={{ marginBlock: "20px" }} />
+
                 <h3 className="table-name">Secondary Winding</h3>
                 {Object.entries(secondaryWindingTable).map(
                     ([table_name, table_content], index) => (
                         <>
+            <hr style={{ marginBlock: "20px" }} />
+
                             <h3 key={nanoid()} className="table-name">
                                 {/* {table_name} */}
                             </h3>

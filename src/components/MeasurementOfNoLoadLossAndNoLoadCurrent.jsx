@@ -631,6 +631,7 @@ export default function MeasurementOfNoLoadLossAndNoLoadCurrent() {
                     percentage={110}
                     value={noLoadLoss110Per}
                 />
+                <hr style={{ marginBlock: "20px" }} />
             </div>
 
             <NextPreviousButton
