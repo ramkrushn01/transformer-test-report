@@ -61,8 +61,8 @@ export default function MeasurementOfNoLoadLossAndNoLoadCurrent() {
         setIsAnyDataChange(true);
         const Resultant = (
             e.target.name === "primary_side"
-                ? e.target.value / ptr.secondary_side
-                : ptr.primary_side / e.target.value
+                ? parseFloat(e.target.value) / parseFloat(ptr.secondary_side)
+                : parseFloat(ptr.primary_side) / parseFloat(e.target.value)
         ).toFixed(4);
 
         setPtr((prev) => ({
@@ -70,15 +70,15 @@ export default function MeasurementOfNoLoadLossAndNoLoadCurrent() {
             [e.target.name]: e.target.value,
             resultant: Resultant,
         }));
-        setMf((parseFloat(Resultant) / parseFloat(ctr.resultant)).toFixed(4));
+        setMf((parseFloat(Resultant) * parseFloat(ctr.resultant)).toFixed(4));
     };
 
     const OnCtrChange = (e) => {
         setIsAnyDataChange(true);
         const Resultant = (
             e.target.name === "primary_side"
-                ? e.target.value / ptr.secondary_side
-                : ptr.primary_side / e.target.value
+                ? parseFloat(e.target.value) / parseFloat(ctr.secondary_side)
+                : parseFloat(ctr.primary_side) / parseFloat(e.target.value)
         ).toFixed(4);
 
         setCtr((prev) => ({
@@ -86,7 +86,7 @@ export default function MeasurementOfNoLoadLossAndNoLoadCurrent() {
             [e.target.name]: e.target.value,
             resultant: Resultant,
         }));
-        setMf((parseFloat(ptr.resultant) / parseFloat(Resultant)).toFixed(4));
+        setMf((parseFloat(ptr.resultant) * parseFloat(Resultant)).toFixed(4));
     };
 
     const OnHVPhaseRatedCurrentChange = (e) => {
