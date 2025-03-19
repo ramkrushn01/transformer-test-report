@@ -237,7 +237,6 @@ export default function MeasurementOfNoLoadLossAndNoLoadCurrent() {
                 setIsSaving(false);
                 toast.error(`Error! ${err}`);
             });
-        setIsSaving(false);
     };
 
     useEffect(() => {
