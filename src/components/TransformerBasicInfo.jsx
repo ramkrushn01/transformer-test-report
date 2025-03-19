@@ -52,7 +52,8 @@ export default function TransformerBasicInfo() {
         "LV VOLTAGE": { TableValuePlaceholder: "LV Winding Voltage", ValueType: "number", DefaultValue: transformerBasicInfo?.lv_voltage, ValueUnit: "VOLTS", ValueIntegralMIN: "1", BackendName: "lv_voltage" },
         "PHASE": { TableValuePlaceholder: "Phase", ValueType: "option", DefaultValue: transformerBasicInfo?.phase , OptionValue: PhaseOption, BackendName: "phase" },
         "No OF LV WINDING": { TableValuePlaceholder: "No of LV Windings", ValueType: "option", DefaultValue: transformerBasicInfo?.no_of_lv_winding, OptionValue: NumberOfWinding, ValueIntegralMIN: "1", BackendName: "no_of_lv_winding" },
-        "VECTOR GROUP": { TableValuePlaceholder: "Vector Group", ValueType: "option", DefaultValue: transformerBasicInfo?.vector_group , OptionValue: VectorGroupOption, BackendName: "vector_group" },
+        // "VECTOR GROUP": { TableValuePlaceholder: "Vector Group", ValueType: "option", DefaultValue: transformerBasicInfo?.vector_group , OptionValue: VectorGroupOption, BackendName: "vector_group" },
+        "VECTOR GROUP": { TableValuePlaceholder: "Vector Group", ValueType: "text", DefaultValue: transformerBasicInfo?.vector_group , OptionValue: VectorGroupOption, BackendName: "vector_group" },
         "TAPPING": { TableValuePlaceholder: "Tapping", ValueType: "option", DefaultValue: transformerBasicInfo?.tapping , OptionValue: TappingOption, BackendName: "tapping" }, // yes/no
         "TYPE OF TAPPING": { TableValuePlaceholder: "Type of Tapping", ValueType: "option", DefaultValue: transformerBasicInfo?.type_of_tapping , OptionValue: TypeOfTappingOption, BackendName: "type_of_tapping" }, // OCTC OLTC
         "TAPPING ON": { TableValuePlaceholder: "Tapping On", ValueType: "option", DefaultValue: transformerBasicInfo?.tapping_on , OptionValue: TappingOnOption, BackendName: "tapping_on" }, // HV LV
