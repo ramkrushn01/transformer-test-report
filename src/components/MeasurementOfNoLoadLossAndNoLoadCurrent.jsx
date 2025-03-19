@@ -300,7 +300,7 @@ export default function MeasurementOfNoLoadLossAndNoLoadCurrent() {
         on_data_change,
     }) => (
         <>
-            <table className="report-table no-load-loss-no-load-current">
+            <table className="report-table no-load-loss-no-load-current-table">
                 <thead>
                     <tr>
                         {Object.entries(excitation_at__percentage_table).map(
@@ -343,7 +343,7 @@ export default function MeasurementOfNoLoadLossAndNoLoadCurrent() {
                 <tbody>
                     {Object.entries(excitation_at__percentage_table).map(
                         ([key, value], index) => (
-                            <td className="consider-d-r">
+                            <td className={`consider-d-r ${key.toLowerCase()}`}>
                                 {Object.entries(value).map(
                                     ([key_i, value_i], index) => (
                                         <>
@@ -587,6 +587,7 @@ export default function MeasurementOfNoLoadLossAndNoLoadCurrent() {
                         </tr>
                     </tbody>
                 </table>
+                <hr style={{ marginBlock: "20px" }} />
                 <h3 className="table-name">90% Excitation</h3>
                 <RenderExcitationTable
                     excitation_at__percentage_table={
