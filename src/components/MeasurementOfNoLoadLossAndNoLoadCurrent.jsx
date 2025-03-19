@@ -308,6 +308,7 @@ export default function MeasurementOfNoLoadLossAndNoLoadCurrent() {
                                     {key}{" "}
                                     <select
                                         name="_unit"
+                                        id={`${table_name}_${key}_unit`}
                                         value={value._unit}
                                         data-row-name={"_unit"}
                                         data-table-name={table_name}
@@ -316,7 +317,8 @@ export default function MeasurementOfNoLoadLossAndNoLoadCurrent() {
                                         onFocus={(e) => {
                                             activeInputRef.current =
                                                 e.target.id;
-                                        }}>
+                                        }}
+                                        >
                                         {key === "Power" ? (
                                             <>
                                                 <option value="W">W</option>
@@ -404,7 +406,7 @@ export default function MeasurementOfNoLoadLossAndNoLoadCurrent() {
                     <td>
                         <label
                             className="main-label"
-                            htmlFor="trans-energized-from">
+                            >
                             NO LOAD LOSS {percentage}% EXCITATION:
                         </label>
                     </td>
@@ -498,12 +500,13 @@ export default function MeasurementOfNoLoadLossAndNoLoadCurrent() {
                         </tr>
                         <tr>
                             <td>
-                                <label htmlFor="ptr" className="main-label">
+                                <label htmlFor="ctr" className="main-label">
                                     CTR:
                                 </label>
                             </td>
                             <td>
                                 <input
+                                    id="ctr"
                                     type="number"
                                     className="main-input"
                                     name="primary_side"
@@ -532,7 +535,7 @@ export default function MeasurementOfNoLoadLossAndNoLoadCurrent() {
                         </tr>
                         <tr>
                             <td>
-                                <label htmlFor="mf" className="main-label">
+                                <label className="main-label">
                                     MF:
                                 </label>
                             </td>
@@ -556,6 +559,7 @@ export default function MeasurementOfNoLoadLossAndNoLoadCurrent() {
                             </td>
                             <td>
                                 <input
+                                    id="hv-phase-rated-current"
                                     type="number"
                                     name="hv_phase_rated_current"
                                     className="main-input"
