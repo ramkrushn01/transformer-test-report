@@ -644,7 +644,7 @@ export default function MeasurementOfNoLoadLossAndNoLoadCurrent() {
 }
 
 const excitation_at__percentage_table = {
-    "voltage/Ph": {
+    "Voltage/Ph": {
         _unit: "V",
         V1: null,
         V2: null,

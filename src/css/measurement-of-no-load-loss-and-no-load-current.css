@@ -1,8 +1,14 @@
+.no-load-loss-no-load-current .main-input{
+    width: 85%;
+}
+
+
 .no-load-loss-no-load-current-table {
     width: fit-content;
     margin-inline: auto;
     /* border: 1px solid #fff; */
 }
+
 
 .no-load-loss-no-load-current-table tbody td {
 }
