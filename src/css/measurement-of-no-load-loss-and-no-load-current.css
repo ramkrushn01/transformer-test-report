@@ -2,6 +2,12 @@
     width: 85%;
 }
 
+.no-load-loss-no-load-current .main-input[readonly] {
+    background-color: #f0f0f0; /* Example style */
+    color: #888;
+    border: 1px solid #ccc;
+}
+
 
 .no-load-loss-no-load-current-table {
     width: fit-content;
