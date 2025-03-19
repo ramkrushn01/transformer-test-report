@@ -170,7 +170,7 @@ export default function MeasurementOfWindingResistance() {
         document.getElementById(activeInputRef.current)?.focus();
     }, [primaryWindingTable, secondaryWindingTable]);
 
-    const NextPreviousButtonState = [false, true];
+    const NextPreviousButtonState = [false, false];
     const NextPrevLink = [
         `/magnetic-balance-and-magnetizing-current-test/${params.reportId}`,
         `/vector-group-test/${params.reportId}`,
