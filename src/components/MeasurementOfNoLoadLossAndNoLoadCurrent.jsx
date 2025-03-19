@@ -105,12 +105,18 @@ export default function MeasurementOfNoLoadLossAndNoLoadCurrent() {
         const NewValue = e.target.value;
         var UpdatedExcitationAt__PercentageTable;
         if (TableName === "excitation_at_90_percentage_table") {
-            UpdatedExcitationAt__PercentageTable = { ...excitationAt90PercentageTable };
+            UpdatedExcitationAt__PercentageTable = {
+                ...excitationAt90PercentageTable,
+            };
         } else if (TableName === "excitation_at_100_percentage_table") {
-            UpdatedExcitationAt__PercentageTable = { ...excitationAt100PercentageTable };
+            UpdatedExcitationAt__PercentageTable = {
+                ...excitationAt100PercentageTable,
+            };
         } else if (TableName === "excitation_at_110_percentage_table") {
-            UpdatedExcitationAt__PercentageTable = { ...excitationAt110PercentageTable };
-        }        
+            UpdatedExcitationAt__PercentageTable = {
+                ...excitationAt110PercentageTable,
+            };
+        }
         UpdatedExcitationAt__PercentageTable[ColumnName][RowName] = NewValue;
 
         const RowPrefix = RowName.charAt(0);
@@ -151,23 +157,48 @@ export default function MeasurementOfNoLoadLossAndNoLoadCurrent() {
             CalculatedAvg = parseFloat(CalculatedAvg.toFixed(4));
             UpdatedExcitationAt__PercentageTable[ColumnName]["SUM"] =
                 CalculatedAvg;
-                if (TableName === "excitation_at_90_percentage_table") {
-                    setNoLoadLoss90Per((CalculatedAvg * mf) / 1000);
-                } else if (TableName === "excitation_at_100_percentage_table") {
-                    setNoLoadLoss100Per((CalculatedAvg * mf) / 1000);
-                } else if (TableName === "excitation_at_110_percentage_table") {
-                    setNoLoadLoss110Per((CalculatedAvg * mf) / 1000);
-                }
+            if (TableName === "excitation_at_90_percentage_table") {
+                setNoLoadLoss90Per(((CalculatedAvg * mf) / 1000).toFixed(4));
+            } else if (TableName === "excitation_at_100_percentage_table") {
+                setNoLoadLoss100Per(((CalculatedAvg * mf) / 1000).toFixed(4));
+            } else if (TableName === "excitation_at_110_percentage_table") {
+                setNoLoadLoss110Per(((CalculatedAvg * mf) / 1000).toFixed(4));
+            }
         }
 
         if (TableName === "excitation_at_90_percentage_table") {
-            setExcitationAt90PercentageTable(UpdatedExcitationAt__PercentageTable);
+            setExcitationAt90PercentageTable(
+                UpdatedExcitationAt__PercentageTable
+            );
         } else if (TableName === "excitation_at_100_percentage_table") {
-            setExcitationAt100PercentageTable(UpdatedExcitationAt__PercentageTable);
+            setExcitationAt100PercentageTable(
+                UpdatedExcitationAt__PercentageTable
+            );
         } else if (TableName === "excitation_at_110_percentage_table") {
-            setExcitationAt110PercentageTable(UpdatedExcitationAt__PercentageTable);
+            setExcitationAt110PercentageTable(
+                UpdatedExcitationAt__PercentageTable
+            );
         }
-        
+    };
+
+    const OnExcitationUnitChange = (e) => {
+        const TableName = e.target.dataset.tableName;
+        const ColumnName = e.target.dataset.columnName;
+        const RowName = e.target.name;
+        const NewValue = e.target.value;
+        if (TableName === "excitation_at_90_percentage_table") {
+            const UnitUpdatedValue = { ...excitationAt90PercentageTable };
+            UnitUpdatedValue[ColumnName][RowName] = NewValue;
+            setExcitationAt90PercentageTable(UnitUpdatedValue);
+        } else if (TableName === "excitation_at_100_percentage_table") {
+            const UnitUpdatedValue = { ...excitationAt100PercentageTable };
+            UnitUpdatedValue[ColumnName][RowName] = NewValue;
+            setExcitationAt100PercentageTable(UnitUpdatedValue);
+        } else if (TableName === "excitation_at_110_percentage_table") {
+            const UnitUpdatedValue = { ...excitationAt110PercentageTable };
+            UnitUpdatedValue[ColumnName][RowName] = NewValue;
+            setExcitationAt110PercentageTable(UnitUpdatedValue);
+        }
     };
 
     const OnSaveClick = (e) => {
@@ -274,7 +305,35 @@ export default function MeasurementOfNoLoadLossAndNoLoadCurrent() {
                         {Object.entries(excitation_at__percentage_table).map(
                             ([key, value], index) => (
                                 <td>
-                                    {key} ({value._unit})
+                                    {key}{" "}
+                                    <select
+                                        name="_unit"
+                                        value={value._unit}
+                                        data-row-name={"_unit"}
+                                        data-table-name={table_name}
+                                        data-column-name={key}
+                                        onChange={OnExcitationUnitChange}
+                                        onFocus={(e) => {
+                                            activeInputRef.current =
+                                                e.target.id;
+                                        }}>
+                                        {key === "Power" ? (
+                                            <>
+                                                <option value="W">W</option>
+                                                <option value="KW">KW</option>
+                                            </>
+                                        ) : key === "Current" ? (
+                                            <>
+                                                <option value="mA">mA</option>
+                                                <option value="A">A</option>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <option value="V">V</option>
+                                                <option value="KV">KV</option>
+                                            </>
+                                        )}
+                                    </select>
                                 </td>
                             )
                         )}
@@ -540,7 +599,7 @@ export default function MeasurementOfNoLoadLossAndNoLoadCurrent() {
                     percentage={90}
                     value={noLoadLoss90Per}
                 />
-                <hr style={{marginBlock:"20px"}}/>
+                <hr style={{ marginBlock: "20px" }} />
 
                 <h3 className="table-name">100% Excitation</h3>
                 <RenderExcitationTable
@@ -549,15 +608,13 @@ export default function MeasurementOfNoLoadLossAndNoLoadCurrent() {
                     }
                     table_name="excitation_at_100_percentage_table"
                     on_data_change={OnExcitation__PercentageTableChange}
-
                 />
                 <RenderNoLoadLoss
                     table_name="excitation_at_100_percentage_table"
                     percentage={100}
                     value={noLoadLoss100Per}
                 />
-                <hr style={{marginBlock:"20px"}}/>
-
+                <hr style={{ marginBlock: "20px" }} />
 
                 <h3 className="table-name">110% Excitation</h3>
                 <RenderExcitationTable
