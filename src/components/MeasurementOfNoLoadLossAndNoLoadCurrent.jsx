@@ -12,7 +12,7 @@ export default function MeasurementOfNoLoadLossAndNoLoadCurrent() {
     const params = useParams();
     const idRef = useRef();
     const activeInputRef = useRef(null);
-    const [isAnyDataChange, setIsAnyDataChange] = useState(true);
+    const [isAnyDataChange, setIsAnyDataChange] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
     const [transformerEnergizedFrom, setTransformerEnergizedFrom] = useState({
         side: null,
@@ -182,6 +182,7 @@ export default function MeasurementOfNoLoadLossAndNoLoadCurrent() {
     };
 
     const OnExcitationUnitChange = (e) => {
+        setIsAnyDataChange(true);
         const TableName = e.target.dataset.tableName;
         const ColumnName = e.target.dataset.columnName;
         const RowName = e.target.name;
