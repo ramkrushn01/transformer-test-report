@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { setReportId } from "../redux/features/reportIdSlice";
 import { useParams } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import VectorDiagram from "./common/VectorDiagram";
 
 export default function VectorGroupTest() {
 	const params = useParams();
@@ -32,6 +33,9 @@ export default function VectorGroupTest() {
 			<div className="main-content-head">
 				Vector Group Test
 			</div>
+            <div className="head-info">
+                <VectorDiagram />
+            </div>
             <NextPreviousButton
                 isSaving={isSaving}
                 OnSaveClick={OnSaveClick}
