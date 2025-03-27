@@ -17,6 +17,7 @@ import MagneticBalanceAndMagnetizingCurrentTest from "./components/MagneticBalan
 import MeasurementOfWindingResistance from "./components/MeasurementOfWindingResistance";
 import MeasurementOfNoLoadLossAndNoLoadCurrent from "./components/MeasurementOfNoLoadLossAndNoLoadCurrent";
 import VectorGroupTest from "./components/VectorGroupTest";
+import MeasurementOfLoadLossAndImpedance from "./components/MeasurementOfLoadLossAndImpedance";
 
 // Layout Component for Sidebar & Main Content
 const Layout = ({ children }) => (
@@ -48,6 +49,7 @@ function App() {
         <Route path="/measurement-of-winding-resistance/:reportId" element={<Layout><MeasurementOfWindingResistance /></Layout>} />
         <Route path="/measurement-of-no-load-loss-and-no-load-current/:reportId" element={<Layout><MeasurementOfNoLoadLossAndNoLoadCurrent /></Layout>} />
         <Route path="/vector-group-test/:reportId" element={<Layout><VectorGroupTest /></Layout>} />
+        <Route path="/measurement-of-load-loss-and-impedance/:reportId" element={<Layout><MeasurementOfLoadLossAndImpedance /></Layout>} />
       </Routes>
     </BrowserRouter>
   );
