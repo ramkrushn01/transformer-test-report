@@ -15,7 +15,7 @@ export default function MeasurementOfNoLoadLossAndNoLoadCurrent() {
     const [isAnyDataChange, setIsAnyDataChange] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
     const [transformerEnergizedFrom, setTransformerEnergizedFrom] = useState({
-        side: null,
+        side: "HV",
         value: null,
         unit: null,
     });
@@ -554,7 +554,7 @@ export default function MeasurementOfNoLoadLossAndNoLoadCurrent() {
                                 <label
                                     htmlFor="hv-phase-rated-current"
                                     className="main-label">
-                                    HV PHASE RATED CURRENT:
+                                    {transformerEnergizedFrom.side} PHASE RATED CURRENT:
                                 </label>
                             </td>
                             <td>
