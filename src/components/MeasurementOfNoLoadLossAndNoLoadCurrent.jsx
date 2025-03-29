@@ -554,7 +554,7 @@ export default function MeasurementOfNoLoadLossAndNoLoadCurrent() {
                                 <label
                                     htmlFor="hv-phase-rated-current"
                                     className="main-label">
-                                    {transformerEnergizedFrom.side} PHASE RATED CURRENT:
+                                    {transformerEnergizedFrom.side ? transformerEnergizedFrom.side : "HV" } PHASE RATED CURRENT:
                                 </label>
                             </td>
                             <td>
