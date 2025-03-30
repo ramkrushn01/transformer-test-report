@@ -21,7 +21,7 @@ export default function Sidebar() {
         { text: "Vector Group Test", link: `/vector-group-test/${reportId}` },
         { text: "Measurement of No Load Loss and No Load Current", link: `/measurement-of-no-load-loss-and-no-load-current/${reportId}` },
         { text: "Measurement Of Load Loss and Impedance", link: `/measurement-of-load-loss-and-impedance/${reportId}` },
-        // { text: "Measurement Of Load Loss and Test", link: `/measurement-of-load-loss-and-test/${reportId}` },
+        { text: "Separate Source Voltage Withstand Test", link: `/separate-source-voltage-withstand-test/${reportId}` },
         { text: "Oil BDV", link: `/oil-bdv/${reportId}` },
         { text: "Induced Over Voltage Test", link: `/induced-over-voltage-test/${reportId}` },
     ];
