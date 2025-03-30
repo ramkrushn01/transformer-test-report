@@ -19,6 +19,7 @@ import MeasurementOfNoLoadLossAndNoLoadCurrent from "./components/MeasurementOfN
 import VectorGroupTest from "./components/VectorGroupTest";
 import MeasurementOfLoadLossAndImpedance from "./components/MeasurementOfLoadLossAndImpedance";
 import SeparateSourceVoltageWithstandTest from "./components/SeparateSourceVoltageWithstandTest";
+import OilBdv from "./components/OilBdv";
 
 // Layout Component for Sidebar & Main Content
 const Layout = ({ children }) => (
@@ -52,6 +53,7 @@ function App() {
         <Route path="/vector-group-test/:reportId" element={<Layout><VectorGroupTest /></Layout>} />
         <Route path="/measurement-of-load-loss-and-impedance/:reportId" element={<Layout><MeasurementOfLoadLossAndImpedance /></Layout>} />
         <Route path="/separate-source-voltage-withstand-test/:reportId" element={<Layout><SeparateSourceVoltageWithstandTest /></Layout>} />
+        <Route path="/oil-bdv/:reportId" element={<Layout><OilBdv /></Layout>} />
       </Routes>
     </BrowserRouter>
   );
