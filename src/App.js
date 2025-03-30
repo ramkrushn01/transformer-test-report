@@ -20,6 +20,7 @@ import VectorGroupTest from "./components/VectorGroupTest";
 import MeasurementOfLoadLossAndImpedance from "./components/MeasurementOfLoadLossAndImpedance";
 import SeparateSourceVoltageWithstandTest from "./components/SeparateSourceVoltageWithstandTest";
 import OilBdv from "./components/OilBdv";
+import InducedOverVoltageTest from "./components/InducedOverVoltageTest";
 
 // Layout Component for Sidebar & Main Content
 const Layout = ({ children }) => (
@@ -54,6 +55,7 @@ function App() {
         <Route path="/measurement-of-load-loss-and-impedance/:reportId" element={<Layout><MeasurementOfLoadLossAndImpedance /></Layout>} />
         <Route path="/separate-source-voltage-withstand-test/:reportId" element={<Layout><SeparateSourceVoltageWithstandTest /></Layout>} />
         <Route path="/oil-bdv/:reportId" element={<Layout><OilBdv /></Layout>} />
+        <Route path="/induced-over-voltage-test/:reportId" element={<Layout><InducedOverVoltageTest /></Layout>} />
       </Routes>
     </BrowserRouter>
   );
