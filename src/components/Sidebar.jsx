@@ -24,7 +24,7 @@ export default function Sidebar() {
         { text: "Separate Source Voltage Withstand Test", link: `/separate-source-voltage-withstand-test/${reportId}` },
         { text: "Oil BDV", link: `/oil-bdv/${reportId}` },
         { text: "Induced Over Voltage Test", link: `/induced-over-voltage-test/${reportId}` },
-        { text: "Measurement of Capacitance and TAN-DELTA", link: `/measurement-of-capacitance-and-tan-delta/${reportId}` },
+        { text: "Measurement of Capacitance and Tan Delta of Winding", link: `/measurement-of-capacitance-and-tan-delta-of-winding/${reportId}` },
     ];
 
     return (

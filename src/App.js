@@ -21,6 +21,7 @@ import MeasurementOfLoadLossAndImpedance from "./components/MeasurementOfLoadLos
 import SeparateSourceVoltageWithstandTest from "./components/SeparateSourceVoltageWithstandTest";
 import OilBdv from "./components/OilBdv";
 import InducedOverVoltageTest from "./components/InducedOverVoltageTest";
+import MeasurementOfCapacitanceAndTanDeltaOfWinding from "./components/MeasurementOfCapacitanceAndTanDeltaOfWinding";
 
 // Layout Component for Sidebar & Main Content
 const Layout = ({ children }) => (
@@ -56,6 +57,7 @@ function App() {
         <Route path="/separate-source-voltage-withstand-test/:reportId" element={<Layout><SeparateSourceVoltageWithstandTest /></Layout>} />
         <Route path="/oil-bdv/:reportId" element={<Layout><OilBdv /></Layout>} />
         <Route path="/induced-over-voltage-test/:reportId" element={<Layout><InducedOverVoltageTest /></Layout>} />
+        <Route path="/measurement-of-capacitance-and-tan-delta-of-winding/:reportId" element={<Layout><MeasurementOfCapacitanceAndTanDeltaOfWinding /></Layout>} />
       </Routes>
     </BrowserRouter>
   );

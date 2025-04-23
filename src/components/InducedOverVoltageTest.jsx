@@ -58,8 +58,8 @@ export default function InducedOverVoltageTest() {
             .catch((err) => {});
     }, []);
 
-    const NextPreviousButtonState = [false, true];
-    const NextPrevLink = [`/oil-bdv/${params.reportId}`, `/`];
+    const NextPreviousButtonState = [false, false];
+    const NextPrevLink = [`/oil-bdv/${params.reportId}`, `/measurement-of-capacitance-and-tan-delta-of-winding/${params.reportId}`];
 
     return (
         <div className="main-content induced-over-voltage-test">
