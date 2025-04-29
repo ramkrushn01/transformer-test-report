@@ -167,8 +167,8 @@ export default function MeasurementOfCapacitanceAndTanDeltaOfWinding() {
         document.getElementById(activeInputRef.current)?.focus();
     }, [hvLeadToHVAndLVLeadToLV, hvLeadToLVAndLVLeadToHV]);
 
-    const NextPreviousButtonState = [false, true];
-    const NextPrevLink = [`/induced-over-voltage-test/${params.reportId}`, `/`];
+    const NextPreviousButtonState = [false, false];
+    const NextPrevLink = [`/induced-over-voltage-test/${params.reportId}`, `/measurement-of-capacitance-and-tan-delta-of-bushing/${params.reportId}`];
 
     return (
         <div className="main-content tan-delta-winding">

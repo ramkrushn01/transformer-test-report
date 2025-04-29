@@ -25,6 +25,7 @@ export default function Sidebar() {
         { text: "Oil BDV", link: `/oil-bdv/${reportId}` },
         { text: "Induced Over Voltage Test", link: `/induced-over-voltage-test/${reportId}` },
         { text: "Measurement of Capacitance and Tan Delta of Winding", link: `/measurement-of-capacitance-and-tan-delta-of-winding/${reportId}` },
+        { text: "Measurement of Capacitance and Tan Delta of Bushing", link: `/measurement-of-capacitance-and-tan-delta-of-bushing/${reportId}` },
     ];
 
     return (
