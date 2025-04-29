@@ -1,0 +1,24 @@
+.bushing-text-input {
+    width: 90%;
+    max-width: 100px;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 14px;
+    transition: all 0.3s ease-in-out;
+}
+
+.table-sub-head{
+    font-weight: bold;
+    background-color: #fafafa;
+    text-align: left !important;
+}
+
+.tan-delta-bushing tr{
+    background-color: #fff !important;
+}
+
+.tan-delta-bushing .temp-tr{
+    background-color: #e4e4e7 !important;
+}
