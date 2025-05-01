@@ -34,9 +34,6 @@ export default function MeasurementOfCapacitanceAndTanDeltaOfBushing() {
         const newBushingTableStructure = {...bushingTableStructure};
         newBushingTableStructure[key][keyI][keyJ] = newValue;
         setBushingTableStructure(newBushingTableStructure); 
-
-        console.log(key, keyI, keyJ);
-
     };
 
     const OnSaveClick = (e) => {
